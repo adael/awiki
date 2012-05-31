@@ -1,7 +1,7 @@
 <?php
 
 echo $this->Form->create('Menu', array(
-	'url' => "/" . $this->request->params['url']['url'],
+	'url' => "/" . $this->request->url,
 	'class' => 'big-form',
 ));
 echo $this->Form->hidden('id');
@@ -31,7 +31,7 @@ echo $this->Form->input('order', array(
 ));
 
 echo "<div style='text-align: right;'>";
-echo $this->Html->link($this->Html->tag('span', __('Cancel'), array('class' => 'cancel')), '/wiki_menu/index', array(
+echo $this->Html->link($this->Html->tag('span', __('Cancel'), array('class' => 'cancel')), '/wiki/menus/index', array(
 	'class' => 'sexybutton sexysimple sexylarge',
 	'escape' => false,
 ));

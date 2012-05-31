@@ -16,7 +16,7 @@ class WikiPage extends AppModel {
 		);
 
 		if(!empty($this->data[$this->alias]['alias'])){
-			$this->set('alias', wiki_encode_alias($this->data[$this->alias]['alias']));
+			$this->set('alias', WikiUtil::encode_alias($this->data[$this->alias]['alias']));
 		}
 
 		return parent::beforeValidate($options);
@@ -43,7 +43,7 @@ class WikiPage extends AppModel {
 	}
 
 	function embedPages(&$page) {
-		$n = preg_match_all('/\{\#([' . WikiUtil::WIKI_PAGE_ALIAS_ALLOWED_CHARS . ']+)\#\}/', $page['Page']['content'], $matches);
+		$n = preg_match_all('/\{\#([' . WikiUtil::WIKI_PAGE_ALIAS_ALLOWED_CHARS . ']+)\#\}/', $page['WikiPage']['content'], $matches);
 		if($n){
 			$res = $this->find('list', array(
 				'fields' => array('alias', 'content'),
@@ -54,7 +54,7 @@ class WikiPage extends AppModel {
 				for($i = 0; $i < $n; $i++){
 					$key = $matches[0][$i];
 					$alias = $matches[1][$i];
-					$page['Page']['content'] = str_replace($key, isset($res[$alias]) ? $res[$alias] : '', $page['Page']['content']);
+					$page['WikiPage']['content'] = str_replace($key, isset($res[$alias]) ? $res[$alias] : '', $page['WikiPage']['content']);
 				}
 			}
 		}

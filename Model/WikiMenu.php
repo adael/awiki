@@ -1,6 +1,6 @@
 <?php
 
-class WikiMenu extends AppModel{
+class WikiMenu extends AppModel {
 
 	/**
 	 * @var array holds class list
@@ -12,7 +12,7 @@ class WikiMenu extends AppModel{
 	 */
 	private $__linkTypes;
 
-	function beforeValidate($options = array()){
+	function beforeValidate($options = array()) {
 		$this->validate = array(
 			'id' => array(
 				'allowEmpty' => true,
@@ -54,7 +54,7 @@ class WikiMenu extends AppModel{
 
 		// Remove invalid chars from link if link_type is page
 		if($this->data[$this->alias]['link_type'] == 'page'){
-			$this->set('link', wiki_encode_alias($this->data[$this->alias]['link']));
+			$this->set('link', WikiUtil::encode_alias($this->data[$this->alias]['link']));
 		}
 
 		return parent::beforeValidate($options);
@@ -64,7 +64,7 @@ class WikiMenu extends AppModel{
 	 * Return available classes
 	 * @return array
 	 */
-	function getClasses(){
+	function getClasses() {
 		if(!$this->__classes){
 			$this->__classes = array(
 				'none' => __('None'),
@@ -83,7 +83,7 @@ class WikiMenu extends AppModel{
 	 * Return available link types.
 	 * @return array
 	 */
-	function getLinkTypes(){
+	function getLinkTypes() {
 		if(!$this->__linkTypes){
 			$this->__linkTypes = array(
 				'page' => __('Page'),

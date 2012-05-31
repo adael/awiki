@@ -12,7 +12,7 @@ class WikiDatagridCellRenderer {
 		if(isset($col['value'])){
 			$value = & $col['value'];
 		}elseif(isset($col['name'])){
-			$value = & fset::get($row, $col['name']);
+			$value = Set::classicExtract($row, $col['name']);
 		}else{
 			$value = null;
 		}

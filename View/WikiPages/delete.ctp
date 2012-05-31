@@ -8,7 +8,7 @@ echo $this->Form->input('title', array(
 ));
 ?>
 <div style="text-align: right;">
-	<a href="<?php echo $this->Html->url('/wiki/index') ?>" class="sexybutton sexysimple sexylarge">
+	<a href="<?php echo $this->Html->url('/wiki/pages/index') ?>" class="sexybutton sexysimple sexylarge">
 		<span class="cancel"><?php echo __('Cancel'); ?></span>
 	</a>
 	<button type="submit" class="sexybutton sexysimple sexylarge">

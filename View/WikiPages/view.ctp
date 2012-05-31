@@ -1,5 +1,5 @@
 <?php
-extract($page['Page'], EXTR_REFS);
+extract($page['WikiPage'], EXTR_REFS);
 $this->Html->css('/js/highlight/styles/default.css', 'stylesheet', array('inline' => false));
 $this->Html->script('highlight/highlight.pack', array('inline' => false));
 echo $this->Html->scriptBlock("
@@ -10,33 +10,33 @@ echo $this->Html->scriptBlock("
 <div class="wiki-page-buttons wiki-fold-menu">
 	<?php
 	if(!$locked){
-		echo $this->Html->link($this->Html->tag('span', __('Edit this page')), '/wiki/edit/' . $alias, array(
+		echo $this->Html->link($this->Html->tag('span', __('Edit this page')), '/wiki/pages/edit/' . $alias, array(
 			'class' => 'wiki-fold-button wiki-fold-edit',
 			'escape' => false,
 		));
-		echo $this->Html->link($this->Html->tag('span', __('Lock page')), '/wiki/lock/' . $alias, array(
+		echo $this->Html->link($this->Html->tag('span', __('Lock page')), '/wiki/pages/lock/' . $alias, array(
 			'class' => 'wiki-fold-button wiki-fold-lock',
 			'escape' => false,
 		));
-		echo $this->Html->link($this->Html->tag('span', __('Delete this page')), '/wiki/delete/' . $alias, array(
+		echo $this->Html->link($this->Html->tag('span', __('Delete this page')), '/wiki/pages/delete/' . $alias, array(
 			'class' => 'wiki-fold-button wiki-fold-delete',
 			'escape' => false,
 		));
 	}else{
-		echo $this->Html->link($this->Html->tag('span', __('Unlock page')), '/wiki/unlock/' . $alias, array(
+		echo $this->Html->link($this->Html->tag('span', __('Unlock page')), '/wiki/pages/unlock/' . $alias, array(
 			'class' => 'wiki-fold-button wiki-fold-unlock',
 			'escape' => false,
 		));
 	}
-	echo $this->Html->link($this->Html->tag('span', __('Add menú')), '/wiki_menu/add', array(
+	echo $this->Html->link($this->Html->tag('span', __('Add menú')), '/wiki/menus/add', array(
 		'class' => 'wiki-fold-button wiki-fold-add',
 		'escape' => false,
 	));
-	echo $this->Html->link($this->Html->tag('span', __('Manage menú')), '/wiki_menu/index', array(
+	echo $this->Html->link($this->Html->tag('span', __('Manage menú')), '/wiki/menus/index', array(
 		'class' => 'wiki-fold-button wiki-fold-manage',
 		'escape' => false,
 	));
-	echo $this->Html->link($this->Html->tag('span', __('Manage pages')), '/wiki/index', array(
+	echo $this->Html->link($this->Html->tag('span', __('Manage pages')), '/wiki/pages/index', array(
 		'class' => 'wiki-fold-button wiki-fold-pages',
 		'escape' => false,
 	));

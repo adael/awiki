@@ -8,7 +8,7 @@ echo $this->Form->input('title', array(
 	'size' => 50,
 ));
 echo "<div style='text-align: right;'>";
-echo $this->Html->link($this->Html->tag('span', __('Cancel'), array('class' => 'cancel')), '/wiki_menu/index', array(
+echo $this->Html->link($this->Html->tag('span', __('Cancel'), array('class' => 'cancel')), '/wiki/menus/index', array(
 	'class' => 'sexybutton sexysimple sexylarge',
 	'escape' => false,
 ));

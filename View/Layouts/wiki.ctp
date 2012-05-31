@@ -28,7 +28,7 @@
 		?>
 		<div class="page-wrapper">
 			<?php
-			echo $this->Html->link($this->Html->image('Wiki./img/AdaWiki2.png', array('alt' => 'AdaWiki2 - The Wiki')), '/', array(
+			echo $this->Html->link($this->Html->image('Wiki./img/AdaWiki2.png', array('alt' => 'AdaWiki2 - The Wiki')), '/wiki/', array(
 				'escape' => false,
 				'class' => 'page-logo',
 			));
@@ -43,7 +43,7 @@
 							$_target = '_self';
 							switch($_menuitem['link_type']){
 								case 'page':
-									$_link = "/wiki/view/{$_menuitem['link']}";
+									$_link = "/wiki/pages/view/{$_menuitem['link']}";
 									if(isset($alias) && $_menuitem['link'] == $alias){
 										$_active = ' active';
 									}
@@ -106,7 +106,7 @@
 				<div class="page-footer-options">
 					<?php
 					if(isset($alias) && $this->request->params['controller'] == 'wiki' && $this->request->params['action'] == 'index'){
-						echo $this->Html->link(__('Print this page'), '/wiki/printView/' . $alias, array(
+						echo $this->Html->link(__('Print this page'), '/wiki/pages/printView/' . $alias, array(
 							'class' => 'wiki-print-page',
 						));
 						echo " - ";

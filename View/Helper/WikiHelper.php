@@ -22,7 +22,7 @@ class WikiHelper extends AppHelper {
 
 		switch($options['parser']){
 			case 'markdown':
-				app::import('vendor', 'markdown/markdown');
+				App::import('Vendor', 'Wiki.Markdown/markdown');
 				$content = Markdown($content);
 				break;
 		}
@@ -41,7 +41,7 @@ class WikiHelper extends AppHelper {
 	 * @return string to replace with matches
 	 */
 	function __link_callback($matches) {
-		return $this->Html->link($matches[1], "/wiki/view/" . wiki_encode_alias($matches[1]));
+		return $this->Html->link($matches[1], "/wiki/pages/view/" . WikiUtil::encode_alias($matches[1]));
 	}
 
 }

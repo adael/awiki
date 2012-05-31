@@ -1,18 +1,18 @@
 <?php
 /* @var $html HtmlHelper */
-$this->Html->css('/js/markitup/markitup/skins/simple/style', 'stylesheet', array('inline' => false));
-$this->Html->css('/js/markitup/markitup/sets/markdown/style', 'stylesheet', array('inline' => false));
-$this->Html->script('markitup/markitup/jquery.markitup', array('inline' => false));
-$this->Html->script('markitup/markitup/sets/markdown/set', array('inline' => false));
+$this->Html->css('Wiki./lib/markitup/markitup/skins/simple/style', 'stylesheet', array('inline' => false));
+$this->Html->css('Wiki./lib/markitup/markitup/sets/markdown/style', 'stylesheet', array('inline' => false));
+$this->Html->script('Wiki./lib/markitup/markitup/jquery.markitup', array('inline' => false));
+$this->Html->script('Wiki./lib/markitup/markitup/sets/markdown/set', array('inline' => false));
 
 $this->Html->scriptBlock("	$(document).ready(function(){
-		mySettings.previewParserPath = '{$this->request->webroot}/wiki/preview';
+		mySettings.previewParserPath = '{$this->request->webroot}/wiki/pages/preview';
 		$('#txtContentEdit').markItUp(mySettings).focus();
 	});", array('inline' => false));
 
 /* @var $form FormHelper */
 echo $this->Form->create(null, array(
-	'url' => "/" . $this->request->params['url']['url'],
+	'url' => "/" . $this->request->url,
 	'class' => 'big-form',
 ));
 
@@ -46,7 +46,7 @@ echo $this->Form->input('Menu.class', array(
 	'options' => $classes,
 	'div' => array(
 		'id' => 'menuStyleDiv',
-		'style' => !empty($this->request->data['Menu']['pin']) ? '' : 'display: none;',
+		'style' => !empty($this->request->data['WikiMenu']['pin']) ? '' : 'display: none;',
 	),
 ));
 ?>
