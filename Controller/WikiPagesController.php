@@ -4,21 +4,14 @@
  * @property WikiPage $WikiPage
  * @property WikiMenu $WikiMenu
  */
-class WikiPagesController extends AppController {
+class WikiPagesController extends WikiAppController {
 
-	var $uses = array(
+	public $components = array('Paginator');
+	public $layout = "Wiki.wiki";
+	public $uses = array(
 		'Wiki.WikiPage',
 		'Wiki.WikiMenu'
 	);
-	var $helpers = array('Js', 'Form', 'Wiki.WikiDatagrid', 'Wiki.Wiki');
-	var $components = array('Paginator');
-	var $layout = "Wiki.wiki";
-
-	function beforeRender() {
-		$this->set('mainmenu', $this->WikiMenu->find('all', array(
-					'fields' => array('title', 'link', 'link_type', 'class'),
-					'order' => 'order')));
-	}
 
 	function index() {
 		$this->paginate = array(
@@ -27,6 +20,25 @@ class WikiPagesController extends AppController {
 			),
 		);
 		$this->set('WikiPages', $this->paginate('WikiPage'));
+	}
+
+	function search() {
+		$search = preg_replace('/[^a-z0-9 \._\-\+]/i', '', (string) @$this->request->query['q']);
+		$search = trim($search);
+		$words = explode(' ', $search);
+		$words = array_filter($words);
+		$search = "*" . implode('* ', $words) . "*";
+		$this->paginate = array(
+			'WikiPage' => array(
+				'conditions' => array(
+					"MATCH (title,content) AGAINST ('{$search}' IN BOOLEAN MODE)"
+				),
+				'limit' => 10,
+			),
+		);
+		$this->set('results', $this->paginate('WikiPage'));
+		$this->set('words', $words);
+		$this->helpers[] = "Wiki.TextSearch";
 	}
 
 	function view($alias = 'index') {
@@ -46,7 +58,7 @@ class WikiPagesController extends AppController {
 		$this->set('content', $this->request->data);
 	}
 
-	function printView($alias) {
+	function print_view($alias) {
 		$page = $this->WikiPage->findByAlias($alias);
 		if(!$page){
 			$this->redirect('/');
@@ -66,7 +78,7 @@ class WikiPagesController extends AppController {
 		// Check content to prevent looping with index
 		if(!empty($page['WikiPage']['locked']) && !empty($page['WikiPage']['content'])){
 			$this->Session->setFlash(__('This page is locked'));
-			$this->redirect("/wiki/pages/view/$alias");
+			$this->redirect(array('action' => 'view', $alias));
 		}
 
 		if(!empty($this->request->data)){
@@ -96,14 +108,10 @@ class WikiPagesController extends AppController {
 			}
 		}
 		$this->request->data = $page;
-		$menuAssociated = $this->WikiMenu->find('first', array('conditions' => array('link' => $alias, 'link_type' => 'page')));
-		if(!empty($menuAssociated)){
-			$this->request->data['WikiMenu'] = $menuAssociated['WikiMenu'];
-			$this->request->data['WikiMenu']['pin'] = true;
-		}
+		$this->request->data['WikiMenu'] = $this->WikiMenu->find('first', array('conditions' => array('link' => $alias, 'link_type' => 'page')));
+		$this->set('menuTree', $this->WikiMenu->generateTreeList(null, null, null, '&nbsp;&nbsp;&nbsp;'));
 
 		$this->set('alias', $alias);
-		$this->set('classes', $this->WikiMenu->getClasses());
 	}
 
 	function lock($alias = null) {
@@ -126,12 +134,12 @@ class WikiPagesController extends AppController {
 			}else{
 				$this->Session->setFlash(join($this->WikiPage->validationErrors));
 			}
-			$this->redirect('/wiki/pages/index');
+			$this->redirect(array('action' => 'index'));
 		}else{
 			$page = $this->WikiPage->findByAlias($alias);
 			if(!$page){
 				$this->Session->setFlash(__('Page not found'));
-				$this->redirect('/wiki/pages/index');
+				$this->redirect(array('action' => 'index'));
 			}
 			$this->request->data = $page;
 		}

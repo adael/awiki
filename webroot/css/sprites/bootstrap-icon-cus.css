@@ -1,0 +1,42 @@
+/* bootstrap compatible icons */
+[class^="icon-cus-"],
+[class*=" icon-cus-"] {
+	margin-top: 2px;
+	background-image: url("bootstrap-icon-cus.png");
+}
+
+.icon-cus-accept{ background-position: 0 0;  }
+.icon-cus-add{ background-position: -17px 0;  }
+.icon-cus-add_componente{ background-position: -34px 0;  }
+.icon-cus-add_gasto{ background-position: -51px 0;  }
+.icon-cus-add_libre{ background-position: -68px 0;  }
+.icon-cus-add_material{ background-position: -85px 0;  }
+.icon-cus-add_servicio{ background-position: -102px 0;  }
+.icon-cus-alert{ background-position: -119px 0;  }
+.icon-cus-attach{ background-position: -136px 0;  }
+.icon-cus-bullet-down{ background-position: -153px 0;  }
+.icon-cus-bullet-left{ background-position: -170px 0;  }
+.icon-cus-bullet-up{ background-position: -187px 0;  }
+.icon-cus-bullet{ background-position: -204px 0;  }
+.icon-cus-bullet_arrow_down{ background-position: -221px 0;  }
+.icon-cus-calc-blue{ background-position: -238px 0;  }
+.icon-cus-comment{ background-position: -255px 0;  }
+.icon-cus-comment_add{ background-position: -272px 0;  }
+.icon-cus-comment_delete{ background-position: -289px 0;  }
+.icon-cus-datetimepicker{ background-position: -306px 0;  }
+.icon-cus-email{ background-position: -323px 0;  }
+.icon-cus-page_add{ background-position: -340px 0;  }
+.icon-cus-page_code{ background-position: -357px 0;  }
+.icon-cus-page_copy{ background-position: -374px 0;  }
+.icon-cus-page_delete{ background-position: -391px 0;  }
+.icon-cus-page_edit{ background-position: -408px 0;  }
+.icon-cus-page_error{ background-position: -425px 0;  }
+.icon-cus-page_gear{ background-position: -442px 0;  }
+.icon-cus-page_go{ background-position: -459px 0;  }
+.icon-cus-page_green{ background-position: -476px 0;  }
+.icon-cus-page_key{ background-position: -493px 0;  }
+.icon-cus-page_lightning{ background-position: -510px 0;  }
+.icon-cus-page_link{ background-position: -527px 0;  }
+.icon-cus-page_red{ background-position: -544px 0;  }
+.icon-cus-save{ background-position: -561px 0;  }
+.icon-cus-text_list_bullets{ background-position: -578px 0;  }

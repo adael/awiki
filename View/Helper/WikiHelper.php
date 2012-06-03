@@ -1,13 +1,11 @@
 <?php
 
+/**
+ * @property HtmlHelper $Html
+ */
 class WikiHelper extends AppHelper {
 
-	var $helpers = array('Html');
-
-	/**
-	 * @var HtmlHelper
-	 */
-	var $Html;
+	public $helpers = array('Html');
 
 	/**
 	 * Process wiki page content for formating with markdown and create links
@@ -41,7 +39,61 @@ class WikiHelper extends AppHelper {
 	 * @return string to replace with matches
 	 */
 	function __link_callback($matches) {
-		return $this->Html->link($matches[1], "/wiki/pages/view/" . WikiUtil::encode_alias($matches[1]));
+		return $this->Html->link($matches[1], array(
+				'controller' => 'wiki_pages',
+				'action' => 'view',
+				WikiUtil::encode_alias($matches[1])
+			));
+	}
+
+	function renderMainMenu($menuItems) {
+		echo $this->Html->tag('ul', null, array('class' => 'nav nav-pills'));
+		foreach($menuItems as $row){
+			$menu = $row['WikiMenu'];
+
+			echo $this->Html->tag('li', $this->generateMenuLink($menu));
+
+			if(!empty($row['children'])){
+				foreach($row['children'] as $children){
+
+				}
+			}
+		}
+		echo "</ul>";
+	}
+
+	function generateMenuLink($menu) {
+		switch($menu['link_type']){
+			case 'folder':
+				return $this->Html->link($menu['title'], '#', array(
+						'class' => 'dropdown-toggle',
+						'data-toggle' => 'dropdown'
+					));
+			case 'page':
+				return $this->__pageLink($menu);
+			case 'internal':
+				return $this->__urlLink($menu);
+			case 'external':
+				return $this->__urlLink($menu, true);
+		}
+	}
+
+	private function __pageLink($menu) {
+		$options = array('target' => '_self');
+		if(isset($this->_View->viewVars['alias'])){
+			if($this->_View->viewVars['alias'] === $menu['link']){
+				$options['class'] = 'active';
+			}
+		}
+		return $this->Html->link($menu['title'], array('controller' => 'wiki_pages', 'action' => 'view', $menu['link']), $options);
+	}
+
+	private function __urlLink($menu, $external = false) {
+		$options = array('target' => '_self');
+		if($external){
+			$options['target'] = '_blank';
+		}
+		return $this->Html->link($menu['title'], $menu['link'], $options);
 	}
 
 }

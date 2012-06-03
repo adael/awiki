@@ -1,16 +1,11 @@
 <?php
 
-class WikiMenu extends AppModel {
+class WikiMenu extends WikiAppModel {
 
-	/**
-	 * @var array holds class list
-	 */
-	private $__classes;
-
-	/**
-	 * @var array holds link types
-	 */
-	private $__linkTypes;
+	public $order = 'WikiMenu.order';
+	public $actsAs = array(
+		'Tree',
+	);
 
 	function beforeValidate($options = array()) {
 		$this->validate = array(
@@ -41,10 +36,6 @@ class WikiMenu extends AppModel {
 				'rule' => 'numeric',
 				'message' => __('Invalid order'),
 			),
-			'class' => array(
-				'rule' => array('inList', array_keys($this->getClasses())),
-				'message' => __('Invalid class type'),
-			),
 		);
 
 		// Default link type
@@ -57,26 +48,12 @@ class WikiMenu extends AppModel {
 			$this->set('link', WikiUtil::encode_alias($this->data[$this->alias]['link']));
 		}
 
-		return parent::beforeValidate($options);
-	}
-
-	/**
-	 * Return available classes
-	 * @return array
-	 */
-	function getClasses() {
-		if(!$this->__classes){
-			$this->__classes = array(
-				'none' => __('None'),
-				'silver' => __('Silver'),
-				'blue' => __('Blue'),
-				'gold' => __('Gold'),
-				'green' => __('Green'),
-				'red' => __('Red'),
-				'pink' => __('Pink'),
-			);
+		if(!$this->id && empty($this->data[$this->alias]['order'])){
+			$order = $this->field('ifnull(max(order), 0) + 1');
+			$this->set('order', $order);
 		}
-		return $this->__classes;
+
+		return parent::beforeValidate($options);
 	}
 
 	/**
@@ -84,14 +61,12 @@ class WikiMenu extends AppModel {
 	 * @return array
 	 */
 	function getLinkTypes() {
-		if(!$this->__linkTypes){
-			$this->__linkTypes = array(
-				'page' => __('Page'),
-				'internal' => __('Internal'),
-				'external' => __('External'),
-			);
-		}
-		return $this->__linkTypes;
+		return array(
+			'page' => __('Page'),
+			'folder' => __('Folder'),
+			'internal' => __('Internal'),
+			'external' => __('External'),
+		);
 	}
 
 }

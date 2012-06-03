@@ -31,11 +31,11 @@ echo $this->Form->input('order', array(
 ));
 
 echo "<div style='text-align: right;'>";
-echo $this->Html->link($this->Html->tag('span', __('Cancel'), array('class' => 'cancel')), '/wiki/menus/index', array(
-	'class' => 'sexybutton sexysimple sexylarge',
+echo $this->Html->link($this->Html->tag('span', __('Cancel'), array('class' => 'cancel')), array('action' => 'index'), array(
+	'class' => 'btn btn-danger',
 	'escape' => false,
 ));
 echo " ";
-echo '<button type="submit" class="sexybutton sexysimple sexylarge"><span class="save">' . __('Save') . '</span></button>';
+echo '<button type="submit" class="btn btn-primary"><span class="save">' . __('Save') . '</span></button>';
 echo "</div>";
 echo $this->Form->end();

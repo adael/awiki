@@ -3,24 +3,20 @@
 /**
  * @property WikiMenu $WikiMenu
  */
-class WikiMenuController extends AppController {
+class WikiMenuController extends WikiAppController {
 
-	var $uses = array('Wiki.WikiMenu');
-	var $layout = 'wiki';
-	var $helpers = array('Wiki.WikiDatagrid');
-
-	function beforeRender() {
-		$menus = $this->WikiMenu->find('all', array(
-			'fields' => array('title', 'link', 'link_type', 'class'),
-			'order' => 'order',
-				));
-		$this->set('mainmenu', $menus);
-	}
+	public $components = array('Paginator');
+	public $layout = 'wiki';
+	public $uses = array('Wiki.WikiMenu');
 
 	function index() {
-		$this->paginate['order'] = 'order';
-		$this->set('items', $this->paginate('Menu'));
-		$this->set('classes', $this->WikiMenu->getClasses());
+		$this->paginate = array(
+			'WikiMenu' => array(
+				'order' => 'order',
+				'limit' => 4,
+			),
+		);
+		$this->set('WikiMenus', $this->paginate('WikiMenu'));
 		$this->set('linkTypes', $this->WikiMenu->getLinkTypes());
 	}
 
@@ -37,14 +33,13 @@ class WikiMenuController extends AppController {
 			if($success){
 				$this->Session->setFlash(__('The menu has been saved'));
 				if($success['WikiMenu']['link_type'] == 'page'){
-					$this->redirect('/wiki/pages/view/' . $success['WikiMenu']['link']);
+					$this->redirect(array('action' => 'view', $success['WikiMenu']['link']));
 				}else{
 					$this->redirect(array('action' => 'index'));
 				}
 			}
 		}
 		$this->request->data = $this->WikiMenu->findById($id);
-		$this->set('classes', $this->WikiMenu->getClasses());
 		$this->set('linkTypes', $this->WikiMenu->getLinkTypes());
 	}
 
@@ -53,12 +48,12 @@ class WikiMenuController extends AppController {
 			$this->WikiMenu->create($this->request->data);
 			$this->WikiMenu->delete();
 			$this->Session->setFlash(__('The menu has been deleted'));
-			$this->redirect('/wiki/menus/index');
+			$this->redirect(array('action' => 'index'));
 		}else{
 			$this->WikiMenu->id = $id;
 			if(!$this->WikiMenu->exists()){
 				$this->Session->setFlash(__('Menu not found'));
-				$this->redirect('/wiki/menus/index');
+				$this->redirect(array('action' => 'index'));
 			}
 			$this->request->data = $this->WikiMenu->read();
 		}
@@ -74,6 +69,11 @@ class WikiMenuController extends AppController {
 			$this->WikiMenu->save();
 		}
 		die("End");
+	}
+
+	function recover() {
+		$this->WikiMenu->recover();
+		$this->flash(__('Menu has been recoved', true), array('action' => 'index'));
 	}
 
 }

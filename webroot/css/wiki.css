@@ -1,0 +1,156 @@
+/* LAYOUT */
+
+body, table {
+	font-family: helvetica, sans-serif;
+}
+
+body {
+	background-color: #f1f1f1;
+	padding-top: 40px;
+}
+
+.page-wrapper {
+	width: 1000px;
+	margin: 0 auto;
+	padding: 40px 10px;
+	min-height: 550px;
+	background: #FFF;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+	border-radius: 0 0 6px 6px;
+	margin-bottom: 20px;
+}
+
+.page-content a.existe {
+	color: blue;
+}
+
+.page-content a.noexiste {
+	color: gray;
+}
+
+.page-content h2 {
+	font-size: 1.8em;
+	margin: 8px 0 4px 0;
+}
+.page-content h3 {
+	font-size: 1.5em;
+	margin: 8px 0 4px 0;
+}
+
+.content-body {
+	min-height: 550px;
+}
+
+.content-body a {
+	color: #666;
+}
+
+.content-body a:hover {
+	color: #30789c;
+}
+
+.page-wrapper .saving {
+	display: block;
+	width: 90%;
+	margin: 0px auto;
+	padding: 10px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	color: #444;
+	background: #F8F2E5;
+	border-radius: 0 0 12px 12px
+}
+
+.content-footer {
+	color: #AAA;
+	font-size: 0.8em;
+	text-align: center;
+}
+
+.page-menu-credits {
+	position: absolute;
+	bottom: 3px;
+	text-align: center;
+	width: 100%;
+	padding: 4px 0;
+	font-size: 0.8em;
+	color: #999;
+}
+
+.page-menu-credits p {
+	padding: 0;
+	margin: 3px 0;
+}
+
+.page-menu-credits a {
+	color: #999;
+	text-decoration: none;
+}
+
+.page-footer-options {
+	float: left;
+}
+
+.page-footer-credits {
+	float: right;
+}
+
+.wiki-print-page {
+	padding-left: 22px;
+	background: transparent url("../img/icons/axialis/web20/16x16/Green/Printer.png") no-repeat 0 0;
+}
+
+#flashMessage {
+	display: none;
+	position: absolute;
+	top: 0;
+	width: 300px;
+	margin-left: -150px;
+	padding: 16px;
+	text-align: center;
+	font-size: 1.4em;
+	left: 50%;
+	z-index: 1;
+}
+
+pre {
+	border: 1px solid #e0e0e0;
+	border-radius: 5px;
+}
+
+.content-body pre {
+	background: #F0F0F0;
+	overflow: auto;
+}
+
+.page-footer {
+	padding-top: 1em;
+	border-top: 1px solid #444;
+}
+
+.search-query {
+	border-radius: 5px;
+}
+
+.cake-pagination li.active {
+	float: left;
+	padding: 0 14px;
+	line-height: 34px;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	border-left-width: 0;
+}
+
+.cake-pagination li.active:first-child {
+	border-left-width: 1px;
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+}
+
+.cake-pagination li.active:last-child {
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}

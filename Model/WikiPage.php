@@ -1,6 +1,6 @@
 <?php
 
-class WikiPage extends AppModel {
+class WikiPage extends WikiAppModel {
 
 	function beforeValidate($options = array()) {
 

@@ -6,13 +6,15 @@ class WikiDatagridHelper extends AppHelper {
 
 	var $helpers = array('Html');
 
-	function render($columns, $rows) {
+	function render($columns, $rows, $tableOptions) {
 		$defaultRenderer = null;
-		echo "<table class='list'>";
+		echo $this->Html->tag('table', null, $tableOptions);
 		echo "<thead>";
+		echo "<tr>";
 		foreach($columns as $col){
 			echo $this->Html->tag('th', $col['text'], @$col['th']);
 		}
+		echo "</tr>";
 		echo "</thead>";
 		echo "<tbody>";
 		foreach($rows as $row){

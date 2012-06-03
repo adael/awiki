@@ -1,28 +1,22 @@
 <?php
-
 App::uses('WikiMenuButtonRenderer', 'Wiki.Lib/Ui/');
 
 $columns = array(
 	array(
-		'name' => 'Menu.title',
+		'name' => 'WikiMenu.title',
 		'text' => __('Title'),
 	),
 	array(
-		'name' => 'Menu.link',
+		'name' => 'WikiMenu.link',
 		'text' => __('Link'),
 	),
 	array(
-		'name' => 'Menu.link_type',
+		'name' => 'WikiMenu.link_type',
 		'text' => __('Link type'),
 		'map' => $linkTypes,
 	),
 	array(
-		'name' => 'Menu.class',
-		'text' => __('Class'),
-		'map' => $classes,
-	),
-	array(
-		'name' => 'Menu.order',
+		'name' => 'WikiMenu.order',
 		'text' => __('Order'),
 		'td' => array('align' => 'center'),
 	),
@@ -34,17 +28,43 @@ $columns = array(
 );
 
 echo $this->Html->tag('h1', __('Manage menus'));
-$this->WikiDatagrid->render($columns, $items);
+$this->WikiDatagrid->render($columns, $WikiMenus, array(
+	'width' => '100%',
+	'class' => 'table table-striped table-outline',
+));
 ?>
 <hr/>
-<div class='pagination'>
-	<?php
-	if($this->Paginator->hasPrev()){
-		echo $this->Paginator->prev($this->Html->image('icons/axialis/web20/rounded/Grey/16x16/Arrow2 Left.png'), array('escape' => false));
-	}
-	echo $this->Paginator->numbers();
-	if($this->Paginator->hasNext()){
-		echo $this->Paginator->next($this->Html->image('icons/axialis/web20/rounded/Grey/16x16/Arrow2 Right.png'), array('escape' => false));
-	}
-	?>
+<div class='pagination pagination-centered cake-pagination'>
+	<ul>
+		<?php
+		$params = $this->Paginator->params();
+
+		if($params['prevPage']){
+			echo $this->Paginator->prev('&laquo;', array(
+				'tag' => 'li',
+				'escape' => false
+			));
+		}
+		echo $this->Paginator->numbers(array(
+			'tag' => 'li',
+			'first' => 1,
+			'last' => 1,
+			'separator' => false,
+			'ellipsis' => false,
+			'currentClass' => 'active',
+		));
+		if($params['nextPage']){
+			echo $this->Paginator->next('&raquo;', array(
+				'tag' => 'li',
+				'escape' => false
+			));
+		}
+		?>
+	</ul>
+</div>
+<div class="form-actions">
+	<a href="<?= $this->Html->url(array('action' => 'add')) ?>" class="btn">
+		<i class="icon-cus-add"></i>
+		<?= __('Add'); ?>
+	</a>
 </div>
