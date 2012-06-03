@@ -6,8 +6,6 @@ echo $this->Html->scriptBlock("
 	hljs.tabReplace = '    ';
 	hljs.initHighlightingOnLoad();
 ");
-
-echo $this->element('Wiki.WikiPages/fold_menu');
 ?>
 <div class="content-body">
 	<div class='page-header'>
@@ -20,11 +18,42 @@ echo $this->element('Wiki.WikiPages/fold_menu');
 
 <hr/>
 
-<div class='well' style="padding: 9px;">
+<div>
 	<?php
 	$bytes = WikiUtil::format_bytes($content_length, 'array');
-	$bytes = $bytes['rounded'] . "<b>" . $bytes['unit'] . "</b>";
-	printf(__('Word count: %s.'), $content_numwords);
-	printf(__('Size: %s. Last modified %s'), $bytes, strftime("%c", strtotime($modified)));
+	$bytes = $bytes['rounded'] . $bytes['unit'];
+	$lastModified = strftime("%c", strtotime($modified));
+	echo __('Word count:');
+	echo " <b>" . $content_numwords . "</b>. ";
+	echo __('Size:');
+	echo " <b>{$bytes}</b>. ";
+	echo __('Last modified:');
+	echo " <b>{$lastModified}</b>.";
 	?>
+
+	<div class="pull-right">
+		<div class="btn-group">
+
+			<?php if(!$page['WikiPage']['locked']): ?>
+				<a class="btn"
+				   href="<?= $this->Html->url(array('action' => 'edit', $alias)); ?>"
+				   title="<?= __('Edit page'); ?>">
+					<i class="icon-pencil"></i>
+				</a>
+				<a class="btn"
+				   href="<?= $this->Html->url(array('action' => 'lock', $alias)); ?>"
+				   title="<?= __('Lock page'); ?>">
+					<i class="icon-lock"></i>
+				</a>
+			<?php endif; ?>
+
+			<a class="btn" target="_blank"
+			   href="<?= $this->Html->url(array('action' => 'print_view', $alias)); ?>"
+			   title="<?= __('Print page'); ?>">
+				<i class="icon-print"></i>
+			</a>
+
+		</div>
+	</div>
+
 </div>

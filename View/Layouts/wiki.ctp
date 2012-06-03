@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>AdaWiki2</title>
+		<title>Awiki</title>
 		<?php
 		// Librerias
 		echo $this->Html->script('Wiki./lib/jquery.min.js');
@@ -13,7 +13,7 @@
 		// Wiki
 		echo $this->Html->css('Wiki./css/wiki.css');
 		echo $this->Html->css('Wiki./css/sprites/icons-16');
-		echo $this->Html->css('Wiki./css/fold-buttons.css');
+//		echo $this->Html->css('Wiki./css/fold-buttons.css');
 		echo $this->Html->css('Wiki./css/sprites/bootstrap-icon-cus');
 
 		echo $this->Html->script('Wiki./js/wiki.js');
@@ -22,13 +22,12 @@
 	</head>
 	<body>
 
-		<?= $this->Session->flash(); ?>
-
 		<?= $this->element('Wiki.navbar') ?>
 		<div class="clearfix"></div>
 
 		<div class="page-wrapper">
-			<div class="container" style="position: relative;">
+			<div class="container">
+				<?= $this->Session->flash(); ?>
 				<?= $content_for_layout ?>
 			</div>
 		</div>

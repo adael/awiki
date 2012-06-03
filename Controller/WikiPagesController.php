@@ -3,10 +3,14 @@
 /**
  * @property WikiPage $WikiPage
  * @property WikiMenu $WikiMenu
+ * @property SearchComponent $Search
  */
 class WikiPagesController extends WikiAppController {
 
-	public $components = array('Paginator');
+	public $components = array(
+		'Paginator',
+		'Wiki.Search',
+	);
 	public $layout = "Wiki.wiki";
 	public $uses = array(
 		'Wiki.WikiPage',
@@ -14,9 +18,14 @@ class WikiPagesController extends WikiAppController {
 	);
 
 	function index() {
+		$this->Search->record();
 		$this->paginate = array(
 			'WikiPage' => array(
 				'limit' => 20,
+				'conditions' => $this->Search->conditions(array(
+					array('title', 'like'),
+					array('locked', '='),
+				)),
 			),
 		);
 		$this->set('WikiPages', $this->paginate('WikiPage'));
@@ -85,7 +94,7 @@ class WikiPagesController extends WikiAppController {
 			$this->WikiPage->create($page); // actually is not creating (cakephp bad syntax here)
 			// For security only sends the fields needed
 			$this->WikiPage->set(array(
-				'alias' => $alias,
+				'alias' => ($alias === null ? Inflector::slug($this->request->data['WikiPage']['title']) : $alias),
 				'title' => $this->request->data['WikiPage']['title'],
 				'content' => &$this->request->data['WikiPage']['content'],
 			));

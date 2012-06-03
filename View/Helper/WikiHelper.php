@@ -46,22 +46,6 @@ class WikiHelper extends AppHelper {
 			));
 	}
 
-	function renderMainMenu($menuItems) {
-		echo $this->Html->tag('ul', null, array('class' => 'nav nav-pills'));
-		foreach($menuItems as $row){
-			$menu = $row['WikiMenu'];
-
-			echo $this->Html->tag('li', $this->generateMenuLink($menu));
-
-			if(!empty($row['children'])){
-				foreach($row['children'] as $children){
-
-				}
-			}
-		}
-		echo "</ul>";
-	}
-
 	function generateMenuLink($menu) {
 		switch($menu['link_type']){
 			case 'folder':

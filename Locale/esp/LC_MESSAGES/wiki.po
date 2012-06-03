@@ -3,7 +3,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: AdaWiki2\n"
+"Project-Id-Version: Awiki\n"
 "POT-Creation-Date: 2011-08-28 19:24+0200\n"
 "PO-Revision-Date: 2011-08-28 19:25+0100\n"
 "Last-Translator: Carlos Gant <adaelxp@gmail.com>\n"
@@ -120,8 +120,8 @@ msgid "Normal"
 msgstr "Normal"
 
 #: \views\layouts\wiki.ctp:116
-msgid "AdaWiki2 by "
-msgstr "AdaWiki2 por"
+msgid "Awiki by "
+msgstr "Awiki por"
 
 #: \views\wiki\edit.ctp:24
 #: \views\wiki_menu\edit.ctp:11

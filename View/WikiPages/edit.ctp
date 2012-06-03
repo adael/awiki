@@ -27,28 +27,32 @@ $this->Html->scriptBlock("	$(document).ready(function(){
 	echo $this->Form->error('alias');
 
 	echo $this->Form->input('title', array(
-		'label' => __('Title'),
-		'class' => 'span8',
-		'size' => 80,
-		'default' => ucfirst(str_replace('_', ' ', $alias)),
+		'label' => false,
+		'placeholder' => __('Title'),
+		'class' => 'span10',
+		'default' => Inflector::humanize($alias),
 	));
 
 	echo $this->Form->input('content', array(
-		'label' => __('Content'),
-		'class' => 'span8',
+		'label' => false,
+		'placeholder' => __('Page content'),
+		'class' => 'span10',
 		'id' => 'txtContentEdit',
 		'rows' => '15',
-		'cols' => '80',
 	));
 
-	echo $this->Form->input('Menu.id', array(
-		'label' => __('Show in Menu'),
-		'options' => $menuTree,
-		'escape' => false,
+	echo $this->Form->input('alias', array(
+		'label' => __('Alias'),
+		'class' => 'span5',
+		'div' => array('class' => 'input-append'),
+		'readonly' => true,
+		'onblur' => '$(this).prop(\'readonly\', true);',
+		'after' => '<a href="#" onclick="$(this).prev(\'input\').prop(\'readonly\', false).select().focus();" class="btn"><i class="icon-edit"></i></a>',
 	));
 	?>
-	<div class="form-actions">
-		<button type="submit" class="btn btn-large"><i class="icon-16-Save"></i> <?php echo __('Save'); ?></button>
+	<div class="form-actions form-actions-custom">
+		<?= $this->Html->link('<i class = "icon-chevron-left"></i> ', array('action' => 'view', $alias), array('class' => 'btn btn-large', 'escape' => false)) ?>
+		<button type="submit" class="btn btn-large btn-success"><?php echo __('Save '); ?></button>
 	</div>
 	<?= $this->Form->end(); ?>
 </fieldset>

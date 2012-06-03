@@ -3,7 +3,7 @@
 	<div class="row">
 
 		<div class="span8">
-			<?php echo __("AdaWiki2 by ") ?> <a href="mailto:adaelxp@gmail.com">Carlos Gant</a>
+			<?php echo __("Awiki by ") ?> <a href="http://twitter.com/#!/adaelxp" target="_blank">Carlos Gant</a>
 			|
 			<?php
 			echo '<a href="http://www.cakephp.org" target="_blank">';
@@ -18,6 +18,8 @@
 			));
 			echo '</a>';
 			?>
+			|
+			<a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
 			|
 			<a href="http://www.axialis.com/free/icons" target="_blank">Icons</a> by <a href="http://www.axialis.com" target="_blank">Axialis Team</a>
 		</div>

@@ -115,7 +115,7 @@ msgid "Normal"
 msgstr ""
 
 #: \views\layouts\wiki.ctp:116
-msgid "AdaWiki2 by "
+msgid "Awiki by "
 msgstr ""
 
 #: \views\wiki\edit.ctp:24

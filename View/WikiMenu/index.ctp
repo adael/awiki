@@ -22,7 +22,7 @@ $columns = array(
 	),
 	array(
 		'text' => __('Actions'),
-		'td' => array('align' => 'left', 'width' => '56'),
+		'td' => array('align' => 'left', 'nowrap' => 'nowrap'),
 		'renderer' => new WikiMenuButtonRenderer($this->Html),
 	),
 );
@@ -34,34 +34,7 @@ $this->WikiDatagrid->render($columns, $WikiMenus, array(
 ));
 ?>
 <hr/>
-<div class='pagination pagination-centered cake-pagination'>
-	<ul>
-		<?php
-		$params = $this->Paginator->params();
-
-		if($params['prevPage']){
-			echo $this->Paginator->prev('&laquo;', array(
-				'tag' => 'li',
-				'escape' => false
-			));
-		}
-		echo $this->Paginator->numbers(array(
-			'tag' => 'li',
-			'first' => 1,
-			'last' => 1,
-			'separator' => false,
-			'ellipsis' => false,
-			'currentClass' => 'active',
-		));
-		if($params['nextPage']){
-			echo $this->Paginator->next('&raquo;', array(
-				'tag' => 'li',
-				'escape' => false
-			));
-		}
-		?>
-	</ul>
-</div>
+<?= $this->element('Wiki.pagination') ?>
 <div class="form-actions">
 	<a href="<?= $this->Html->url(array('action' => 'add')) ?>" class="btn">
 		<i class="icon-cus-add"></i>

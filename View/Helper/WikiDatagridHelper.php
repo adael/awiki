@@ -6,7 +6,7 @@ class WikiDatagridHelper extends AppHelper {
 
 	var $helpers = array('Html');
 
-	function render($columns, $rows, $tableOptions) {
+	function render($columns, $rows, $tableOptions = array()) {
 		$defaultRenderer = null;
 		echo $this->Html->tag('table', null, $tableOptions);
 		echo "<thead>";

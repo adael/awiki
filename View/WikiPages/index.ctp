@@ -1,51 +1,67 @@
+<div class="page-header">
+	<h1><?= __('Manage pages') ?></h1>
+</div>
+<form method="post" class="well form-inline">
+	<div class="pull-left">
+		<input type="text" name="search[title]" value="<?= $this->Search->get('title') ?>" placeholder="<?= __('Search by title') ?>" />
+		<label class="checkbox">
+			<input type="checkbox" name="search[locked]" <?= $this->Search->get('locked') ? 'checked' : '' ?> />
+			<?= __('Locked') ?>
+		</label>
+	</div>
+	<div class="btn-group pull-right">
+		<input class="btn btn-small btn-primary" type="submit" value="<?= __('Search') ?>"/>
+		<input class="btn btn-small" type="submit" name="search[reset]" value="<?= __('Reset') ?>"/>
+	</div>
+</form>
 <?php
-
 App::uses('WikiPageButtonRenderer', 'Wiki.Lib/Ui/');
 
 $columns = array(
 	array(
-		'name' => 'Page.title',
+		'name' => 'WikiPage.title',
 		'text' => __('Title'),
 	),
 	array(
-		'name' => 'Page.content_numwords',
+		'name' => 'WikiPage.content_numwords',
 		'text' => __('Num. Words'),
 		'td' => array('align' => 'center'),
 	),
 	array(
-		'name' => 'Page.content_length',
+		'name' => 'WikiPage.content_length',
 		'text' => __('Content length'),
 		'td' => array('align' => 'center'),
 	),
 	array(
-		'name' => 'Page.locked',
+		'name' => 'WikiPage.locked',
 		'text' => __('Locked'),
 		'td' => array('align' => 'center'),
+		'map' => array(
+			0 => '-',
+			1 => __('Yes'),
+		),
 	),
 	array(
-		'name' => 'Page.created',
+		'name' => 'WikiPage.created',
 		'text' => __('Created'),
 		'td' => array('align' => 'center'),
 	),
 	array(
 		'text' => __('Actions'),
-		'td' => array('align' => 'left', 'width' => '56'),
+		'td' => array('align' => 'left', 'nowrap', 'width' => 90),
 		'renderer' => new WikiPageButtonRenderer($this->Html),
 	),
 );
-
-echo $this->Html->tag('h1', __('Manage pages'));
-$this->WikiDatagrid->render($columns, $WikiPages);
+$this->WikiDatagrid->render($columns, $WikiPages, array(
+	'width' => '100%',
+	'class' => 'table table-striped table-outline'
+));
 ?>
 <hr/>
-<div class='pagination'>
-	<?php
-	if($this->Paginator->hasPrev()){
-		echo $this->Paginator->prev($this->Html->image('icons/axialis/web20/rounded/Grey/16x16/Arrow2 Left.png'), array('escape' => false));
-	}
-	echo $this->Paginator->numbers();
-	if($this->Paginator->hasNext()){
-		echo $this->Paginator->next($this->Html->image('icons/axialis/web20/rounded/Grey/16x16/Arrow2 Right.png'), array('escape' => false));
-	}
-	?>
+<?= $this->element('Wiki.pagination') ?>
+<div class="form-actions">
+	<a href="<?= $this->Html->url(array('action' => 'edit')) ?>" class="btn">
+		<i class="icon-cus-add"></i>
+		<?= __('Add'); ?>
+	</a>
 </div>

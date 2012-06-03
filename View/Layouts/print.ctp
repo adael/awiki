@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>AdaWiki2</title>
+		<title>Awiki</title>
 		<?php echo $scripts_for_layout; ?>
 	</head>
 	<body>
