@@ -8,7 +8,6 @@
 				'class' => 'brand',
 			));
 
-
 			if(!empty($MainWikiMenu)){
 				$this->Wiki->renderMainMenu($MainWikiMenu);
 			}
