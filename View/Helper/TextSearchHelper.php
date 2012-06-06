@@ -13,15 +13,22 @@ class TextSearchHelper extends AppHelper {
 			// matches[0] is array(keyword, position)
 			$snippets[] = $matches[0];
 		}else{
+			$offset = 0;
 			foreach($words as $word){
-				$snippets[] = array($word, stripos($content, $word));
+				$pos = stripos($content, $word, $offset);
+				if($pos !== false){
+					$snippets[] = array($word, $pos);
+					$offset = $pos + strlen($word);
+				}
 			}
 		}
 
-		$s = "";
-		foreach($snippets as $entry){
+		$out = array();
+		foreach($snippets as $k => $entry){
 
 			list($word, $position) = $entry;
+
+			$s = "";
 
 			$inicio = $position - $padding;
 			if($inicio > 0){
@@ -33,18 +40,22 @@ class TextSearchHelper extends AppHelper {
 			$length = strlen($word) + ($padding * 2);
 
 			$snippet = substr($content, $inicio, $length);
+			$matchedWords = array();
 
-			foreach($words as $_w){
-				$snippet = str_ireplace($_w, "<u>{$_w}</u>", $snippet);
-			}
+			$patWords = '\\b' . join('\\b|\\b', $words) . '\\b';
+			preg_match_all('/' . $patWords . '/i', $snippet, $matches);
+			$snippet = preg_replace('/(' . $patWords . ')/i', '<u>\\1</u>', $snippet);
+			$matchedWords = $matches[0];
 
 			$s .= $snippet;
 
 			if($inicio + $length < $contentLength){
 				$s .= "... ";
 			}
+
+			$out[] = array('text' => $s, 'matchedWords' => $matchedWords);
 		}
-		return $s;
+		return $out;
 	}
 
 }

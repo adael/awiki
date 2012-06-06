@@ -41,6 +41,16 @@ echo $this->Html->scriptBlock("
 					<i class="icon-pencil"></i>
 					<span><?= __('Edit') ?></span>
 				</a>
+
+				<?php if(!$pageInMenu): ?>
+					<a class="btn"
+					   href="<?= $this->Html->url(array('controller' => 'WikiMenu', 'action' => 'add', 'alias' => $alias)) ?>"
+					   title="<?= __('Create a menu with this page') ?>">
+						<i class="icon-th-list"></i>
+						<span><?= __('Create menu') ?></span>
+					</a>
+				<?php endif; ?>
+
 				<a class="btn"
 				   href="<?= $this->Html->url(array('action' => 'lock', $alias)); ?>"
 				   title="<?= __('Lock page'); ?>">

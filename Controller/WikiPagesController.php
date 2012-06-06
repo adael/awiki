@@ -56,13 +56,15 @@ class WikiPagesController extends WikiAppController {
 		$search = trim($search);
 		$words = explode(' ', $search);
 		$words = array_filter($words);
-		$search = "*" . implode('* ', $words) . "*";
+		$search = implode(' ', $words);
+
+		$match = "MATCH (title,content) AGAINST ('{$search}' IN BOOLEAN MODE)";
+
 		$this->paginate = array(
 			'WikiPage' => array(
-				'conditions' => array(
-					"MATCH (title,content) AGAINST ('{$search}' IN BOOLEAN MODE)"
-				),
+				'conditions' => array($match),
 				'limit' => 10,
+				'order' => $match . " DESC",
 			),
 		);
 		$this->set('results', $this->paginate('WikiPage'));
@@ -79,7 +81,11 @@ class WikiPagesController extends WikiAppController {
 		// Support for including other page contents with {#page_alias#}
 		$this->WikiPage->embedPages($page);
 
-		$this->set(compact('alias', 'page'));
+		$pageInMenu = ($alias === 'index') || $this->WikiMenu->find('count', array(
+				'conditions' => array('page_alias' => $alias),
+			));
+
+		$this->set(compact('alias', 'page', 'pageInMenu'));
 	}
 
 	/**
@@ -128,11 +134,6 @@ class WikiPagesController extends WikiAppController {
 		}
 		$this->request->data = $page;
 		$this->set('alias', $alias);
-		$this->set('RootMenus', $this->WikiMenu->find('list', array(
-				'conditions' => array(
-					'type' => 'nav'
-				),
-			)));
 	}
 
 	function ajax_live_edit($alias = null) {

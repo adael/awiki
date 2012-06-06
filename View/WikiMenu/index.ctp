@@ -1,6 +1,23 @@
 <div class="page-header">
 	<h1><?= __('Manage menus') ?></h1>
 </div>
+<form method="post" class="well form-inline">
+	<div class="pull-left">
+		<input type="text" name="search[caption]" value="<?= $this->Search->get('caption') ?>" placeholder="<?= __('Search by title') ?>" />
+		<?php
+		echo $this->Form->input('search.type', array(
+			'div' => false,
+			'label' => false,
+			'value' => $this->Search->get('type'),
+			'options' => array('' => __('Search by type')) + $WikiMenuTypes,
+		));
+		?>
+	</div>
+	<div class="btn-group pull-right">
+		<input class="btn btn-small btn-primary" type="submit" value="<?= __('Search') ?>"/>
+		<input class="btn btn-small" type="submit" name="search[reset]" value="<?= __('Reset') ?>"/>
+	</div>
+</form>
 <?php
 App::uses('WikiMenuButtonRenderer', 'Wiki.Lib/Ui/');
 

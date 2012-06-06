@@ -28,6 +28,16 @@ class WikiPage extends WikiAppModel {
 		if($this->valueEmpty('alias')){
 			$this->set('alias', Inflector::slug($this->value('title')));
 		}
+
+		$n = $this->find('count', array(
+			'conditions' => array(
+				'alias' => $this->value('alias'),
+				'id !=' => $this->id,
+			),
+			));
+		if($n){
+			$this->invalidate('alias', __('El alias %s ya existe indique otro', $alias));
+		}
 		return parent::beforeValidate($options);
 	}
 

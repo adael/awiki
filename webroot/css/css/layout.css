@@ -104,3 +104,8 @@ body {
 .site-config-button:hover i {
 	opacity: 1.0;
 }
+
+
+.hover-highlight:hover {
+	background-color: #fefdde;
+}

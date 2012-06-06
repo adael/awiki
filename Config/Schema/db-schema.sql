@@ -23,7 +23,6 @@ CREATE TABLE `wiki_pages` (
   `locked` tinyint(1) unsigned NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  `internal` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idxUniqueAlias` (`alias`),
   FULLTEXT KEY `idxFtContent` (`content`,`title`)

@@ -1,11 +1,13 @@
 require.config({
 	urlArgs: "bust=" +  (new Date()).getTime()
 });
-require(['jquery', 'wiki/ui/font_resize'], function($){
+require(['jquery'], function($){
 
-	$("#flashMessage").slideDown('normal');
-	setTimeout(function(){
-		$("#flashMessage").slideUp('normal');
-	}, 3000);
+	$(function(){
+		$("#flashMessage").slideDown('normal');
+		setTimeout(function(){
+			$("#flashMessage").slideUp('normal');
+		}, 3000);
+	});
 
 });

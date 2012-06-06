@@ -5,15 +5,23 @@
  */
 class WikiMenuController extends WikiAppController {
 
-	public $components = array('Paginator');
+	public $components = array(
+		'Paginator',
+		'Wiki.Search',
+	);
 	public $layout = 'wiki';
 	public $uses = array('Wiki.WikiMenu');
 
 	function index() {
+		$this->Search->record();
 		$this->paginate = array(
 			'WikiMenu' => array(
+				'conditions' => $this->Search->conditions(array(
+					array('caption', 'like'),
+					array('type', '='),
+				)),
 				'order' => 'order',
-				'limit' => 4,
+				'limit' => 15,
 			),
 		);
 		$this->set('WikiMenus', $this->paginate('WikiMenu'));
@@ -21,12 +29,20 @@ class WikiMenuController extends WikiAppController {
 	}
 
 	function add() {
+		$alias = Set::get($this->request->params, 'named.alias');
+		if($this->request->is('get') && $alias){
+			$this->request->data = array('WikiMenu' => array(
+					'caption' => Inflector::humanize($alias),
+					'type' => 'page',
+					'page_alias' => $alias,
+				));
+		}
 		$this->edit();
 		$this->render('edit');
 	}
 
 	function edit($id = null) {
-		if(!empty($this->request->data)){
+		if($this->request->is('post') && !empty($this->request->data)){
 			$this->WikiMenu->create();
 			$this->WikiMenu->set($this->request->data);
 			$success = $this->WikiMenu->save();
@@ -37,8 +53,9 @@ class WikiMenuController extends WikiAppController {
 				}
 				$this->redirect($r);
 			}
+		}elseif($id){
+			$this->request->data = $this->WikiMenu->findById($id);
 		}
-		$this->request->data = $this->WikiMenu->findById($id);
 		$this->set('WikiMenuTypes', $this->WikiMenu->getTypes());
 		$this->set('RootMenus', $this->WikiMenu->find('list', array(
 				'conditions' => array(

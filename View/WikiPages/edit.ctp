@@ -1,5 +1,9 @@
 <?php
 /* @var $this View */
+$this->Html->css('/wiki/css/wiki_markitup_theme/style', 'stylesheet', array('inline' => false));
+$this->Html->css('/wiki/lib/markitup/markitup/sets/markdown/style', 'stylesheet', array('inline' => false));
+$this->Html->script('/wiki/lib/markitup/markitup/jquery.markitup', array('inline' => false));
+$this->Html->script('/wiki/lib/markitup/markitup/sets/markdown/set', array('inline' => false));
 ?>
 <div class="page-header">
 	<h1><?= __('Editing') ?>: <?= ($this->request->data('WikiPage.title') ? : __('New page')) ?></h1>
@@ -28,11 +32,6 @@
 		'class' => 'span12',
 		'rows' => '15',
 	));
-	$this->Html->css('Wiki./css/wiki_markitup_theme/style', 'stylesheet', array('inline' => false));
-	$this->Html->css('Wiki./lib/markitup/markitup/sets/markdown/style', 'stylesheet', array('inline' => false));
-	$this->Html->script('Wiki./lib/markitup/markitup/jquery.markitup', array('inline' => false));
-	$this->Html->script('Wiki./lib/markitup/markitup/sets/markdown/set', array('inline' => false));
-
 	echo $this->Form->input('alias', array(
 		'label' => __('Alias (is obtained automatically from the title)'),
 		'class' => 'span5',
@@ -42,16 +41,12 @@
 		'after' => '<a href="#" onclick="$(this).prev(\'input\').prop(\'readonly\', false).select().focus();" class="btn"><i class="icon-edit"></i></a>',
 	));
 
-	echo $this->Form->input('WikiMenu.parent_id', array(
-		'label' => __('Place inside'),
-		'options' => array('' => __('-')) + $RootMenus,
-	));
-
 	echo $this->Form->input('tags', array(
 		'label' => __('Tags (use semicolon ";" to separate tags)'),
 		'class' => 'span5',
 	));
 	?>
+
 	<hr/>
 
 	<a href="<?= $this->Wiki->referer(array('action' => 'view', $alias)) ?>" class="btn btn-danger">
