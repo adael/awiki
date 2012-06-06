@@ -1,19 +1,18 @@
+<div class="page-header">
+	<h1><?= __('Manage menus') ?></h1>
+</div>
 <?php
 App::uses('WikiMenuButtonRenderer', 'Wiki.Lib/Ui/');
 
 $columns = array(
 	array(
-		'name' => 'WikiMenu.title',
-		'text' => __('Title'),
+		'name' => 'WikiMenu.caption',
+		'text' => __('Caption'),
 	),
 	array(
-		'name' => 'WikiMenu.link',
-		'text' => __('Link'),
-	),
-	array(
-		'name' => 'WikiMenu.link_type',
-		'text' => __('Link type'),
-		'map' => $linkTypes,
+		'name' => 'WikiMenu.type',
+		'text' => __('Type'),
+		'map' => $WikiMenuTypes,
 	),
 	array(
 		'name' => 'WikiMenu.order',
@@ -21,13 +20,24 @@ $columns = array(
 		'td' => array('align' => 'center'),
 	),
 	array(
+		'text' => __('Link'),
+		'value' => function($col, $row){
+			if($row['WikiMenu']['type'] === 'page'){
+				return $row['WikiMenu']['page_alias'];
+			}elseif($row['WikiMenu']['type'] === 'link'){
+				return $row['WikiMenu']['link_url'];
+			}else{
+				return '-';
+			}
+		},
+	),
+	array(
 		'text' => __('Actions'),
 		'td' => array('align' => 'left', 'nowrap' => 'nowrap'),
-		'renderer' => new WikiMenuButtonRenderer($this->Html),
+		'element' => 'Wiki.WikiMenu/index/datagrid_actions',
 	),
 );
 
-echo $this->Html->tag('h1', __('Manage menus'));
 $this->WikiDatagrid->render($columns, $WikiMenus, array(
 	'width' => '100%',
 	'class' => 'table table-striped table-outline',

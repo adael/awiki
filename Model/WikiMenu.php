@@ -3,49 +3,43 @@
 class WikiMenu extends WikiAppModel {
 
 	public $order = 'WikiMenu.order';
-	public $actsAs = array(
-		'Tree',
+	public $validate = array(
+		'id' => array(
+			'allowEmpty' => true,
+			'rule' => 'numeric',
+			'message' => 'Invalid id',
+		),
+		'caption' => array(
+			'required' => true,
+			'allowEmpty' => false,
+			'rule' => 'notEmpty',
+			'message' => 'caption is required',
+		),
+		'type' => array(
+			'required' => true,
+			'allowEmpty' => false,
+			'rule' => 'valid_types',
+			'message' => 'Invalid menu type',
+		),
+		'order' => array(
+			'rule' => 'numeric',
+			'message' => 'Invalid order',
+		),
 	);
 
 	function beforeValidate($options = array()) {
-		$this->validate = array(
-			'id' => array(
-				'allowEmpty' => true,
-				'rule' => 'numeric',
-				'message' => __('Invalid id'),
-			),
-			'title' => array(
-				'required' => true,
-				'allowEmpty' => false,
-				'rule' => 'notEmpty',
-				'message' => __('Title is required'),
-			),
-			'link' => array(
-				'required' => true,
-				'allowEmpty' => false,
-				'rule' => 'notEmpty',
-				'message' => __('Link is required'),
-			),
-			'link_type' => array(
-				'required' => true,
-				'allowEmpty' => false,
-				'rule' => array('inList', array_keys($this->getLinkTypes())),
-				'message' => __('Invalid link type'),
-			),
-			'order' => array(
-				'rule' => 'numeric',
-				'message' => __('Invalid order'),
-			),
-		);
 
-		// Default link type
-		if(!isset($this->data[$this->alias]['link_type'])){
-			$this->set('link_type', 'page');
+		// Default type
+		if(!isset($this->data[$this->alias]['type'])){
+			$this->set('type', 'page');
 		}
 
 		// Remove invalid chars from link if link_type is page
-		if($this->data[$this->alias]['link_type'] == 'page'){
-			$this->set('link', WikiUtil::encode_alias($this->data[$this->alias]['link']));
+		if($this->data[$this->alias]['type'] === 'page'){
+			$this->set('page_alias', WikiUtil::encode_alias($this->data[$this->alias]['page_alias']));
+			if(empty($this->data[$this->alias]['page_alias'])){
+				$this->invalidate('page_alias', '');
+			}
 		}
 
 		if(!$this->id && empty($this->data[$this->alias]['order'])){
@@ -60,13 +54,16 @@ class WikiMenu extends WikiAppModel {
 	 * Return available link types.
 	 * @return array
 	 */
-	function getLinkTypes() {
+	function getTypes() {
 		return array(
+			'nav' => __('Navigation menu'),
 			'page' => __('Page'),
-			'folder' => __('Folder'),
-			'internal' => __('Internal'),
-			'external' => __('External'),
+			'link' => __('Link'),
 		);
+	}
+
+	function valid_types($check) {
+		return array_key_exists(reset($check), $this->getTypes());
 	}
 
 }

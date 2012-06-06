@@ -1,21 +1,9 @@
 <?php
-/* @var $html HtmlHelper */
-$this->Html->css('Wiki./lib/markitup/markitup/skins/simple/style', 'stylesheet', array('inline' => false));
-$this->Html->css('Wiki./lib/markitup/markitup/sets/markdown/style', 'stylesheet', array('inline' => false));
-$this->Html->script('Wiki./lib/markitup/markitup/jquery.markitup', array('inline' => false));
-$this->Html->script('Wiki./lib/markitup/markitup/sets/markdown/set', array('inline' => false));
-
-$previewUrl = $this->Html->url(array('action' => 'preview'));
-$this->Html->scriptBlock("	$(document).ready(function(){
-		mySettings.previewParserPath = '{$previewUrl}';
-		$('#txtContentEdit').markItUp(mySettings).focus();
-	});", array('inline' => false));
+/* @var $this View */
 ?>
-
 <div class="page-header">
 	<h1><?= __('Editing') ?>: <?= ($this->request->data('WikiPage.title') ? : __('New page')) ?></h1>
 </div>
-
 <fieldset>
 	<?php
 	/* @var $form FormHelper */
@@ -29,30 +17,48 @@ $this->Html->scriptBlock("	$(document).ready(function(){
 	echo $this->Form->input('title', array(
 		'label' => false,
 		'placeholder' => __('Title'),
-		'class' => 'span10',
+		'class' => 'span12',
 		'default' => Inflector::humanize($alias),
 	));
-
 	echo $this->Form->input('content', array(
+		'id' => 'txtContentEdit',
+		'data-preview-url' => $this->Html->url(array('action' => 'ajax_preview')),
 		'label' => false,
 		'placeholder' => __('Page content'),
-		'class' => 'span10',
-		'id' => 'txtContentEdit',
+		'class' => 'span12',
 		'rows' => '15',
 	));
+	$this->Html->css('Wiki./css/wiki_markitup_theme/style', 'stylesheet', array('inline' => false));
+	$this->Html->css('Wiki./lib/markitup/markitup/sets/markdown/style', 'stylesheet', array('inline' => false));
+	$this->Html->script('Wiki./lib/markitup/markitup/jquery.markitup', array('inline' => false));
+	$this->Html->script('Wiki./lib/markitup/markitup/sets/markdown/set', array('inline' => false));
 
 	echo $this->Form->input('alias', array(
-		'label' => __('Alias'),
+		'label' => __('Alias (is obtained automatically from the title)'),
 		'class' => 'span5',
 		'div' => array('class' => 'input-append'),
 		'readonly' => true,
 		'onblur' => '$(this).prop(\'readonly\', true);',
 		'after' => '<a href="#" onclick="$(this).prev(\'input\').prop(\'readonly\', false).select().focus();" class="btn"><i class="icon-edit"></i></a>',
 	));
+
+	echo $this->Form->input('tags', array(
+		'label' => __('Tags (use semicolon ";" to separate tags)'),
+		'class' => 'span5',
+	));
 	?>
-	<div class="form-actions form-actions-custom">
-		<?= $this->Html->link('<i class = "icon-chevron-left"></i> ', array('action' => 'view', $alias), array('class' => 'btn btn-large', 'escape' => false)) ?>
-		<button type="submit" class="btn btn-large btn-success"><?php echo __('Save '); ?></button>
-	</div>
+	<hr/>
+
+	<a href="<?= $this->Html->url(array('action' => 'view', $alias)) ?>" class="btn btn-danger">
+		<i class="icon-chevron-left icon-white"></i>
+		<?= __('Cancel') ?>
+	</a>
+
+	<button type="submit" class="btn btn-success">
+		<i class="icon-ok-sign icon-white"></i>
+		<?= __('Save '); ?>
+	</button>
+
 	<?= $this->Form->end(); ?>
 </fieldset>
+<script>require(["wiki/page/edit"]);</script>

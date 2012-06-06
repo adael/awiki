@@ -33,9 +33,22 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
+								<a href="<?= $this->Html->url(array('controller' => 'wiki_pages', 'action' => 'edit')) ?>">
+									<i class="icon-plus"></i>
+									<?= __('Add pages') ?>
+								</a>
+							</li>
+							<li>
 								<a href="<?= $this->Html->url(array('controller' => 'wiki_pages', 'action' => 'index')) ?>">
 									<i class="icon-list"></i>
 									<?= __('Manage pages') ?>
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="<?= $this->Html->url(array('controller' => 'wiki_menu', 'action' => 'index')) ?>">
+									<i class="icon-wrench"></i>
+									<?= __('Manage site menu') ?>
 								</a>
 							</li>
 						</ul>

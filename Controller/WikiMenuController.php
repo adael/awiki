@@ -17,7 +17,7 @@ class WikiMenuController extends WikiAppController {
 			),
 		);
 		$this->set('WikiMenus', $this->paginate('WikiMenu'));
-		$this->set('linkTypes', $this->WikiMenu->getLinkTypes());
+		$this->set('WikiMenuTypes', $this->WikiMenu->getTypes());
 	}
 
 	function add() {
@@ -40,23 +40,21 @@ class WikiMenuController extends WikiAppController {
 			}
 		}
 		$this->request->data = $this->WikiMenu->findById($id);
-		$this->set('linkTypes', $this->WikiMenu->getLinkTypes());
+		$this->set('WikiMenuTypes', $this->WikiMenu->getTypes());
 	}
 
 	function delete($id = null) {
-		if(!empty($this->request->data)){
-			$this->WikiMenu->create($this->request->data);
-			$this->WikiMenu->delete();
-			$this->Session->setFlash(__('The menu has been deleted'));
+		$this->WikiMenu->id = $id;
+		if(!$this->WikiMenu->exists()){
+			$this->Session->setFlash(__('Menu not found'));
 			$this->redirect(array('action' => 'index'));
-		}else{
-			$this->WikiMenu->id = $id;
-			if(!$this->WikiMenu->exists()){
-				$this->Session->setFlash(__('Menu not found'));
-				$this->redirect(array('action' => 'index'));
-			}
-			$this->request->data = $this->WikiMenu->read();
 		}
+		if($this->WikiMenu->delete()){
+			$this->Session->setFlash(__('The menu has been deleted'));
+		}else{
+			$this->Session->setFlash(join($this->WikiMenu->validationErrors));
+		}
+		$this->redirect(array('action' => 'index'));
 	}
 
 	function populate() {
@@ -69,11 +67,6 @@ class WikiMenuController extends WikiAppController {
 			$this->WikiMenu->save();
 		}
 		die("End");
-	}
-
-	function recover() {
-		$this->WikiMenu->recover();
-		$this->flash(__('Menu has been recoved', true), array('action' => 'index'));
 	}
 
 }

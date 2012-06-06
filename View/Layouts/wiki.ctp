@@ -4,36 +4,30 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>Awiki</title>
 		<?php
-		// Librerias
-		echo $this->Html->script('Wiki./lib/jquery.min.js');
+		// css
+		echo $this->Html->css('/wiki/lib/bootstrap/css/bootstrap.min.css');
+		echo $this->Html->css('/wiki/css/main.css');
+		echo $this->Html->css('/wiki/css/sprites/icons-16');
+		echo $this->Html->css('/wiki/css/sprites/bootstrap-icon-cus');
 
-		echo $this->Html->script('Wiki./lib/bootstrap/js/bootstrap.min.js');
-		echo $this->Html->css('Wiki./lib/bootstrap/css/bootstrap.min.css');
-//		echo $this->Html->css('Wiki./lib/bootstrap/css/bootstrap-responsive.min.css');
-		// Wiki
-		echo $this->Html->css('Wiki./css/wiki.css');
-		echo $this->Html->css('Wiki./css/sprites/icons-16');
-//		echo $this->Html->css('Wiki./css/fold-buttons.css');
-		echo $this->Html->css('Wiki./css/sprites/bootstrap-icon-cus');
+		// At firt: requirejs and jquery
+		echo $this->Html->script('/wiki/js/require-jquery.js', array(
+			'data-main' => $this->Html->url('/wiki/js/main'),
+		));
 
-		echo $this->Html->script('Wiki./js/wiki.js');
+		// Rest of scripts
+		echo $this->Html->script('/wiki/lib/bootstrap/js/bootstrap.min.js');
 		echo $scripts_for_layout;
 		?>
 	</head>
 	<body>
-
 		<?= $this->element('Wiki.navbar') ?>
-		<div class="clearfix"></div>
-
 		<div class="page-wrapper">
 			<div class="container">
 				<?= $this->Session->flash(); ?>
 				<?= $content_for_layout ?>
 			</div>
 		</div>
-
-		<div class="clearfix"></div>
 		<?= $this->element('Wiki.footer') ?>
-
 	</body>
 </html>

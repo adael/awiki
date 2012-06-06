@@ -2,8 +2,8 @@
 
 class WikiPage extends WikiAppModel {
 
-	function beforeValidate($options = array()) {
-
+	function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
 		$this->validate = array(
 			'alias' => array(
 				'rule' => '/^[' . WikiUtil::WIKI_PAGE_ALIAS_ALLOWED_CHARS . ']+$/',
@@ -11,19 +11,23 @@ class WikiPage extends WikiAppModel {
 			),
 			'title' => array(
 				'rule' => 'notEmpty',
-				'message' => __('Title cannot be empty'),
+				'message' => 'Title cannot be empty',
 			),
 		);
+	}
 
-		if(!empty($this->data[$this->alias]['alias'])){
-			$this->set('alias', WikiUtil::encode_alias($this->data[$this->alias]['alias']));
+	function beforeValidate($options = array()) {
+		if(empty($this->data[$this->alias]['alias'])) {
+			$this->data[$this->alias]['alias'] = Inflector::slug($this->data[$this->alias]['title']);
 		}
-
 		return parent::beforeValidate($options);
 	}
 
 	function beforeSave($options = array()) {
-		if(isset($this->data[$this->alias]['content'])){
+		if(!empty($this->data[$this->alias]['alias'])) {
+			$this->set('alias', WikiUtil::encode_alias($this->data[$this->alias]['alias']));
+		}
+		if(isset($this->data[$this->alias]['content'])) {
 			$this->set('content_length', strlen($this->data[$this->alias]['content']));
 			$this->set('content_numwords', WikiUtil::str_word_count_utf8($this->data[$this->alias]['content']));
 		}
@@ -31,7 +35,7 @@ class WikiPage extends WikiAppModel {
 	}
 
 	function beforeDelete($cascade = true) {
-		if($this->field('internal')){
+		if($this->field('internal')) {
 			$this->invalidate('internal', __("You cannot delete this page because it's a system page"));
 			return false;
 		}
@@ -43,18 +47,19 @@ class WikiPage extends WikiAppModel {
 	}
 
 	function embedPages(&$page) {
-		$n = preg_match_all('/\{\#([' . WikiUtil::WIKI_PAGE_ALIAS_ALLOWED_CHARS . ']+)\#\}/', $page['WikiPage']['content'], $matches);
-		if($n){
+		$matches = null;
+		$n = preg_match_all('/\{\#([' . WikiUtil::WIKI_PAGE_ALIAS_ALLOWED_CHARS . ']+)\#\}/', $page[$this->alias]['content'], $matches);
+		if($n) {
 			$res = $this->find('list', array(
 				'fields' => array('alias', 'content'),
 				'conditions' => array('alias' => $matches[1]),
 				'limit' => 25, # prevent flooding and stupidity
 					));
-			if(!empty($res)){
-				for($i = 0; $i < $n; $i++){
+			if(!empty($res)) {
+				for($i = 0; $i < $n; $i++) {
 					$key = $matches[0][$i];
 					$alias = $matches[1][$i];
-					$page['WikiPage']['content'] = str_replace($key, isset($res[$alias]) ? $res[$alias] : '', $page['WikiPage']['content']);
+					$page[$this->alias]['content'] = str_replace($key, isset($res[$alias]) ? $res[$alias] : '', $page[$this->alias]['content']);
 				}
 			}
 		}

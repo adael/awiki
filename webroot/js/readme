@@ -1,0 +1,2 @@
+jquery/jqueryui.js		contains a custom jqueryui build enclosed by a define() to make it works with requirejs
+jquery/plugins/*		contains the plugins enclosed by a define() to make it works with requirejs

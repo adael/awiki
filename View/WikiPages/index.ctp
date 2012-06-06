@@ -49,7 +49,7 @@ $columns = array(
 	array(
 		'text' => __('Actions'),
 		'td' => array('align' => 'left', 'nowrap', 'width' => 90),
-		'renderer' => new WikiPageButtonRenderer($this->Html),
+		'element' => 'Wiki.WikiPages/index/datagrid_actions',
 	),
 );
 $this->WikiDatagrid->render($columns, $WikiPages, array(
@@ -64,4 +64,18 @@ $this->WikiDatagrid->render($columns, $WikiPages, array(
 		<i class="icon-cus-add"></i>
 		<?= __('Add'); ?>
 	</a>
+</div>
+
+<div class="modal hide" id="myModal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>Confirm deletion</h3>
+	</div>
+	<div class="modal-body">
+		<p>{}</p>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<a href="#" class="btn btn-primary">Save changes</a>
+	</div>
 </div>

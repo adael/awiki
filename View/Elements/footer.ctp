@@ -26,7 +26,7 @@
 
 		<div class="span4">
 			<?php
-			if(isset($alias) && $this->request->params['controller'] == 'wiki_pages' && $this->request->params['action'] == 'view'){
+			if(isset($alias) && $this->request->params['controller'] == 'wiki_pages' && $this->request->params['action'] == 'view') {
 				echo $this->Html->link(__('Print this page'), array('action' => 'print_view', $alias), array(
 					'class' => 'wiki-print-page',
 				));

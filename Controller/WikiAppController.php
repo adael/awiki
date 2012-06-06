@@ -12,7 +12,7 @@ class WikiAppController extends AppController {
 	public $helpers = array('Form', 'Js', 'Wiki.Wiki', 'Wiki.WikiDatagrid');
 
 	public function beforeRender() {
-		$this->__sendMainMenu();
+		#$this->__sendMainMenu();
 	}
 
 	protected function _checkNamed($k) {

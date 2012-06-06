@@ -16,7 +16,7 @@ echo $this->Html->scriptBlock("
 	?>
 </div>
 
-<hr/>
+<hr />
 
 <div>
 	<?php
@@ -39,11 +39,13 @@ echo $this->Html->scriptBlock("
 				   href="<?= $this->Html->url(array('action' => 'edit', $alias)); ?>"
 				   title="<?= __('Edit page'); ?>">
 					<i class="icon-pencil"></i>
+					<span><?= __('Edit') ?></span>
 				</a>
 				<a class="btn"
 				   href="<?= $this->Html->url(array('action' => 'lock', $alias)); ?>"
 				   title="<?= __('Lock page'); ?>">
 					<i class="icon-lock"></i>
+					<span><?= __('Lock') ?></span>
 				</a>
 			<?php endif; ?>
 
@@ -51,6 +53,7 @@ echo $this->Html->scriptBlock("
 			   href="<?= $this->Html->url(array('action' => 'print_view', $alias)); ?>"
 			   title="<?= __('Print page'); ?>">
 				<i class="icon-print"></i>
+				<span><?= __('Print') ?></span>
 			</a>
 
 		</div>
