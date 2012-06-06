@@ -1,18 +1,22 @@
 define(['jquery', 'jquery/jqueryui'], function($){
+
 	$("#WikiMenuType").change(function(e){
-		$("#divPageAlias,#divLinkUrl").hide();
-		switch($(this).val()){
-			case 'page':
-				$("#divPageAlias").show();
-				break;
-			case 'link':
-				$("#divLinkUrl").show();
-				break;
-		}
+		var type = this.value;
+		$("#divPageAlias").toggle(type === 'page');
+		$("#divLinkUrl").toggle(type === 'link');
+		$("#divParentId").toggle(type !== 'nav');
 	}).change();
 
 	$("#WikiMenuPageAlias").autocomplete({
 		source: $("#WikiMenuPageAlias").data('source')
+	});
+
+	$("#WikiMenuPageAlias").next('a').click(function(e){
+		e.preventDefault();
+		$("#WikiMenuPageAlias").prop('readonly', false).select().focus();
+	})
+	$("#WikiMenuPageAlias").blur(function(){
+		$(this).prop('readonly', true);
 	});
 
 });

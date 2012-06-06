@@ -10,9 +10,10 @@ class WikiAppController extends AppController {
 		'DebugKit.Toolbar'
 	);
 	public $helpers = array('Form', 'Js', 'Wiki.Wiki', 'Wiki.WikiDatagrid');
+	public $uses = array('Wiki.WikiMenu');
 
 	public function beforeRender() {
-		#$this->__sendMainMenu();
+		$this->__sendMainMenu();
 	}
 
 	protected function _checkNamed($k) {
@@ -28,31 +29,21 @@ class WikiAppController extends AppController {
 	}
 
 	private function __sendMainMenu() {
-		if(!isset($this->WikiMenu)){
-			$this->loadModel('WikiMenu');
+		$menu = $this->WikiMenu->find('all', array('conditions' => array('parent_id' => 0)));
+		$menu = Set::combine($menu, '{n}.WikiMenu.id', '{n}.WikiMenu');
+		$submenu = $this->WikiMenu->find('all', array('conditions' => array('parent_id' => array_keys($menu))));
+		$submenu = Set::combine($submenu, '{n}.WikiMenu.id', '{n}.WikiMenu');
+		// create nested structure (only one level)
+		$MainMenu = array();
+		foreach($menu as $menuId => $menuItem){
+			foreach($submenu as $subMenuItem){
+				if(intval($subMenuItem['parent_id']) === intval($menuId)){
+					$menuItem['children'][] = $subMenuItem;
+				}
+			}
+			$MainMenu[] = $menuItem;
 		}
-
-		$root_ids = $this->WikiMenu->find('list', array(
-			'conditions' => array(
-				'parent_id' => null,
-				'show_in_navbar' => true,
-			),
-			));
-		$root_ids = array_keys($root_ids);
-		$root_children_ids = $this->WikiMenu->find('list', array(
-			'conditions' => array(
-				'parent_id' => $root_ids,
-				'show_in_navbar' => true,
-			),
-			'limit' => 10,
-			));
-		$root_children_ids = array_keys($root_children_ids);
-		$menus = $this->WikiMenu->find('threaded', array(
-			'fields' => array('id', 'title', 'link', 'link_type'),
-			'conditions' => array('id' => array_merge($root_ids, $root_children_ids)),
-			));
-
-		$this->set('MainWikiMenu', $menus);
+		$this->set('MainMenu', $MainMenu);
 	}
 
 }

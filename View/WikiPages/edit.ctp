@@ -42,6 +42,11 @@
 		'after' => '<a href="#" onclick="$(this).prev(\'input\').prop(\'readonly\', false).select().focus();" class="btn"><i class="icon-edit"></i></a>',
 	));
 
+	echo $this->Form->input('WikiMenu.parent_id', array(
+		'label' => __('Place inside'),
+		'options' => array('' => __('-')) + $RootMenus,
+	));
+
 	echo $this->Form->input('tags', array(
 		'label' => __('Tags (use semicolon ";" to separate tags)'),
 		'class' => 'span5',
@@ -49,7 +54,7 @@
 	?>
 	<hr/>
 
-	<a href="<?= $this->Html->url(array('action' => 'view', $alias)) ?>" class="btn btn-danger">
+	<a href="<?= $this->Wiki->referer(array('action' => 'view', $alias)) ?>" class="btn btn-danger">
 		<i class="icon-chevron-left icon-white"></i>
 		<?= __('Cancel') ?>
 	</a>

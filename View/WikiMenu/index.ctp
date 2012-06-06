@@ -20,7 +20,7 @@ $columns = array(
 		'td' => array('align' => 'center'),
 	),
 	array(
-		'text' => __('Link'),
+		'text' => __('Page alias or Link'),
 		'value' => function($col, $row){
 			if($row['WikiMenu']['type'] === 'page'){
 				return $row['WikiMenu']['page_alias'];
@@ -33,7 +33,7 @@ $columns = array(
 	),
 	array(
 		'text' => __('Actions'),
-		'td' => array('align' => 'left', 'nowrap' => 'nowrap'),
+		'td' => array('align' => 'left', 'width' => 180, 'nowrap' => 'nowrap'),
 		'element' => 'Wiki.WikiMenu/index/datagrid_actions',
 	),
 );
@@ -45,9 +45,24 @@ $this->WikiDatagrid->render($columns, $WikiMenus, array(
 ?>
 <hr/>
 <?= $this->element('Wiki.pagination') ?>
-<div class="form-actions">
-	<a href="<?= $this->Html->url(array('action' => 'add')) ?>" class="btn">
-		<i class="icon-cus-add"></i>
-		<?= __('Add'); ?>
-	</a>
+<hr/>
+<a href="<?= $this->Html->url(array('action' => 'add')) ?>" class="btn">
+	<i class="icon-cus-add"></i>
+	<?= __('Add menu'); ?>
+</a>
+
+<div class="modal fade hide" id="WikiMenuDeleteDialog" style="display: none;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3><?= __('Attention:') ?></h3>
+	</div>
+	<div class="modal-body">
+		<p><?= __('Do you want to delete this menu?') ?></p>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-danger" data-action="delete"><?= __('Delete') ?></a>
+		<a href="#" class="btn" data-dismiss="modal"><?= __('Cancel') ?></a>
+	</div>
 </div>
+
+<script>require(["wiki/menu/index"]);</script>

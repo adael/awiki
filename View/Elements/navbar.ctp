@@ -11,10 +11,20 @@
 
 			<ul class="nav nav-pills">
 				<?php
-				if(!empty($MainWikiMenu)){
-					foreach($MainWikiMenu as $row){
-						$menu = $row['WikiMenu'];
-						echo $this->Html->tag('li', $this->Wiki->generateMenuLink($menu));
+				if(!empty($MainMenu)){
+					foreach($MainMenu as $menu){
+						if(!empty($menu['children'])){
+							echo $this->Html->tag('li', null, array('class' => 'dropdown'));
+							echo $this->Wiki->generateMenuLink($menu);
+							echo $this->Html->tag('ul', null, array('class' => 'dropdown-menu'));
+							foreach($menu['children'] as $submenu){
+								echo $this->Html->tag('li', $this->Wiki->generateMenuLink($submenu));
+							}
+							echo "</ul>";
+							echo "</li>";
+						}else{
+							echo $this->Html->tag('li', $this->Wiki->generateMenuLink($menu));
+						}
 					}
 				}
 				?>

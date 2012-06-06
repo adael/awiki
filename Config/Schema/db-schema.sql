@@ -1,14 +1,16 @@
 CREATE TABLE `wiki_menus` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `link` text NOT NULL,
-  `link_type` enum('page','internal','external') NOT NULL,
+  `parent_id` int(11) unsigned NOT NULL,
+  `caption` varchar(255) NOT NULL,
+  `type` enum('nav','link','page') NOT NULL DEFAULT 'page',
+  `page_alias` varchar(255) NOT NULL,
+  `link_url` text NOT NULL,
+  `link_target` varchar(16) NOT NULL,
   `order` int(11) NOT NULL DEFAULT '0',
-  `class` enum('silver','pink','blue','gold','green','red','none') NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `wiki_pages` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -23,5 +25,7 @@ CREATE TABLE `wiki_pages` (
   `modified` datetime NOT NULL,
   `internal` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idxUniqueAlias` (`alias`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `idxUniqueAlias` (`alias`),
+  FULLTEXT KEY `idxFtContent` (`content`,`title`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

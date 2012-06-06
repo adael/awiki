@@ -3,18 +3,7 @@
 class WikiUtil {
 
 	const WORD_COUNT_MASK = "/(\p{L}[\p{L}\p{Mn}\p{Pd}'\x{2019}]*){4,}/u";
-	const WIKI_PAGE_ALIAS_ALLOWED_CHARS = 'A-Za-z0-9_\-ÁÉÍÓÚÜáéíóúüñÑ€$%\. ';
-
-	/**
-	 * Prepare the alias for wiki pages
-	 * @param string $alias
-	 * @return string
-	 */
-	public static function encode_alias($alias) {
-		$alias = str_replace(' ', '_', $alias);
-		$alias = preg_replace('/[^' . self::WIKI_PAGE_ALIAS_ALLOWED_CHARS . ']/', '', $alias);
-		return substr($alias, 0, 250);
-	}
+	const WIKI_PAGE_ALIAS_ALLOWED_CHARS = 'A-Za-z0-9\_';
 
 	/**
 	 *

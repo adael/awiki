@@ -11,6 +11,9 @@ $this->Html->css('/wiki/css/jqueryui_custom_theme/jquery-ui-1.8.21.custom', null
 		'class' => 'big-form',
 	));
 	echo $this->Form->hidden('id');
+	echo $this->Form->hidden('_action.redirect', array(
+		'default' => $this->request->referer(),
+	));
 	echo $this->Form->error('id');
 
 	echo $this->Form->input('caption', array(
@@ -41,30 +44,49 @@ $this->Html->css('/wiki/css/jqueryui_custom_theme/jquery-ui-1.8.21.custom', null
 	</div>
 
 	<?php
-	echo $this->Form->input('page_alias', array(
+	echo $this->Form->input('parent_id', array(
+		'label' => __('Place inside'),
 		'div' => array(
-			'id' => 'divPageAlias',
-			'style' => 'display: none;'
+			'id' => 'divParentId',
+			'style' => 'display: none;',
 		),
-		'data-source' => $this->Html->url(array(
-			'controller' => 'WikiPages',
-			'action' => 'autocomplete',
-		)),
-		'type' => 'text',
-		'label' => __('Page alias'),
-	));
-
-	echo $this->Form->input('link_url', array(
-		'div' => array(
-			'id' => 'divLinkUrl',
-			'style' => 'display: none;'
-		),
-		'type' => 'text',
-		'label' => __('Link url'),
+		'options' => array('0' => __('Root menu')) + $RootMenus,
 	));
 	?>
 
+	<div id="divPageAlias" style="display: none;">
+		<?php
+		echo $this->Form->input('page_alias', array(
+			'data-source' => $this->Html->url(array(
+				'controller' => 'WikiPages',
+				'action' => 'autocomplete',
+			)),
+			'div' => array('class' => 'input-prepend input-append'),
+			'type' => 'text',
+			'label' => __('Page alias'),
+			'readonly' => true,
+			'title' => __('This field is assigned automatically, but you can edit it by clicking right button'),
+			'between' => '<span title="' . __('This field autocompletes') . '", class="add-on"><i class="icon-search"></i></span>',
+			'after' => '<a href="#" class="btn"><i class="icon-edit"></i></a>',
+		));
+		?>
+	</div>
 
+	<div id="divLinkUrl" style="display: none;">
+		<?php
+		echo $this->Form->input('link_url', array(
+			'type' => 'text',
+			'label' => __('Link url'),
+		));
+		echo $this->Form->input('link_target', array(
+			'label' => __('Open link in'),
+			'options' => array(
+				'_blank' => __('New tab/window'),
+				'_self' => __('Current tab/window'),
+			),
+		));
+		?>
+	</div>
 	<div class="row">
 		<div class="span1">
 			<?php
@@ -85,7 +107,7 @@ $this->Html->css('/wiki/css/jqueryui_custom_theme/jquery-ui-1.8.21.custom', null
 	</div>
 
 	<hr/>
-	<a href="<?= $this->Html->url(array('action' => 'index')) ?>" class="btn btn-danger">
+	<a href="<?= $this->Wiki->referer(array('action' => 'index')) ?>" class="btn btn-danger">
 		<i class="icon-chevron-left icon-white"></i>
 		<?= __('Cancel') ?>
 	</a>

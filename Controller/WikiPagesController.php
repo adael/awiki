@@ -122,12 +122,17 @@ class WikiPagesController extends WikiAppController {
 			));
 			$success = $this->WikiPage->save();
 			if($success){
-				# $this->_saveMenuPin();
+				$this->Session->setFlash(__('The page has been saved'));
 				$this->redirect(array('action' => 'view', $alias));
 			}
 		}
 		$this->request->data = $page;
 		$this->set('alias', $alias);
+		$this->set('RootMenus', $this->WikiMenu->find('list', array(
+				'conditions' => array(
+					'type' => 'nav'
+				),
+			)));
 	}
 
 	function ajax_live_edit($alias = null) {

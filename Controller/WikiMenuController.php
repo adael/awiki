@@ -32,15 +32,19 @@ class WikiMenuController extends WikiAppController {
 			$success = $this->WikiMenu->save();
 			if($success){
 				$this->Session->setFlash(__('The menu has been saved'));
-				if($success['WikiMenu']['link_type'] == 'page'){
-					$this->redirect(array('action' => 'view', $success['WikiMenu']['link']));
-				}else{
-					$this->redirect(array('action' => 'index'));
+				if(!($r = $this->request->data('_action.redirect'))){
+					$r = array('action' => 'index');
 				}
+				$this->redirect($r);
 			}
 		}
 		$this->request->data = $this->WikiMenu->findById($id);
 		$this->set('WikiMenuTypes', $this->WikiMenu->getTypes());
+		$this->set('RootMenus', $this->WikiMenu->find('list', array(
+				'conditions' => array(
+					'type' => 'nav'
+				),
+			)));
 	}
 
 	function delete($id = null) {
