@@ -1,4 +1,4 @@
-# Installing instructions
+# Install instructions
 
 * Install cakephp 2.1.x
 * Install wiki plugin
