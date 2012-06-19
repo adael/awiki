@@ -28,3 +28,4 @@ CREATE TABLE `wiki_pages` (
   FULLTEXT KEY `idxFtContent` (`content`,`title`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
