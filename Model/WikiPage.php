@@ -28,7 +28,6 @@ class WikiPage extends WikiAppModel {
 		if($this->valueEmpty('alias')){
 			$this->set('alias', Inflector::slug($this->value('title')));
 		}
-
 		$n = $this->find('count', array(
 			'conditions' => array(
 				'alias' => $this->value('alias'),
@@ -49,6 +48,16 @@ class WikiPage extends WikiAppModel {
 			$this->set('content_length', strlen($this->value('content')));
 			$this->set('content_numwords', WikiUtil::str_word_count_utf8($this->value('content')));
 		}
+
+		if($this->id){
+			$oldAlias = $this->field('alias');
+			if($oldAlias && $oldAlias !== $this->value('alias')){
+				$this->WikiMenu->updateAll(array('page_alias' => $this->value('alias')), array(
+					'page_alias' => $oldAlias,
+				));
+			}
+		}
+
 		return parent::beforeSave($options);
 	}
 

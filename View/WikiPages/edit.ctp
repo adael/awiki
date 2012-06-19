@@ -41,10 +41,10 @@ $this->Html->script('/wiki/lib/markitup/markitup/sets/markdown/set', array('inli
 		'after' => '<a href="#" onclick="$(this).prev(\'input\').prop(\'readonly\', false).select().focus();" class="btn"><i class="icon-edit"></i></a>',
 	));
 
-	echo $this->Form->input('tags', array(
-		'label' => __('Tags (use semicolon ";" to separate tags)'),
-		'class' => 'span5',
-	));
+//	echo $this->Form->input('tags', array(
+//		'label' => __('Tags (use semicolon ";" to separate tags)'),
+//		'class' => 'span5',
+//	));
 	?>
 
 	<hr/>

@@ -3,7 +3,7 @@
 class WikiUtil {
 
 	const WORD_COUNT_MASK = "/(\p{L}[\p{L}\p{Mn}\p{Pd}'\x{2019}]*){4,}/u";
-	const WIKI_PAGE_ALIAS_ALLOWED_CHARS = 'A-Za-z0-9\_';
+	const WIKI_PAGE_ALIAS_ALLOWED_CHARS = 'A-Za-z0-9 áéíóúÁÉÍÓÚñÑ€üÜ\_';
 
 	/**
 	 *
