@@ -17,7 +17,7 @@
 * Not perfect
 * Markdown for content
 * Fulltext search
-* Topmenu is configurable with sublevels
+* Top menu is configurable with sublevels
 * Lock pages
 * Print mode
 * Preview
@@ -25,7 +25,7 @@
 
 # Some tips
 
-* You can manage the wiki topmenu using the dropdown button at the right of the search box (which is at top-right corner)
+* You can manage the wiki top menu using the dropdown button at the right of the search box (which is at top-right corner)
 * Also you can view all created pages inside this menu
 * Use simple brackets to create links (Example: [page one])
 * For external links use [Page title](http://externalsite.org)
