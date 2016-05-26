@@ -29,6 +29,6 @@
 * You can manage the wiki top menu using the dropdown button at the right of the search box (which is at top-right corner)
 * Also you can view all created pages inside this menu
 * Use simple brackets to create links (Example: \[page one\])
-* For external links use \[Page title\]\(http://externalsite.org\)
+* For external links use \[Page title\]\(http://externalsite.org)
 * You can create also internal links with alternative title like this: \[My internal page\]\(my_page_alias\)
 * In edit mode you can preview your changes (use the green tick in toolbar, at most right)
