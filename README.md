@@ -1,10 +1,11 @@
 # Install instructions
 
+* PHP 5.3+ required, works fine in PHP 7
 * Install CakePHP 2.x
 * Install wiki plugin. The folder name must be "Wiki"
 * Add the plugin in app/Config/bootstrap.php
 
-    CakePlugin::load('Wiki', ['bootstrap' => true, 'routes' => true]);
+    CakePlugin::load('Wiki', array('bootstrap' => true, 'routes' => true));
 
 * Import sql file **plugins/Wiki/Config/Schema/db-schema.sql** into your database
 * Create/edit app/Config/database.php
