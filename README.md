@@ -4,7 +4,7 @@
 * Install wiki plugin. The folder name must be "Wiki"
 * Add the plugin in app/Config/bootstrap.php
 
-    CakePlugin::load('Wiki')
+    CakePlugin::load('Wiki', ['bootstrap' => true, 'routes' => true]);
 
 * Import sql file **plugins/Wiki/Config/Schema/db-schema.sql** into your database
 * Create/edit app/Config/database.php
