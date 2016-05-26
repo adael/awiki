@@ -2,74 +2,77 @@
 
 App::uses('WikiDatagridCellRenderer', 'Wiki.Lib/Ui/');
 
-class WikiDatagridHelper extends AppHelper {
+class WikiDatagridHelper extends AppHelper
+{
 
-	var $helpers = array('Html');
+    public $helpers = array('Html');
 
-	function prepareRow($col, $row) {
+    public function prepareRow($col, $row)
+    {
 
-		// Resolve value if is closure
-		if(isset($col['value']) && $col['value'] instanceof Closure){
-			$value = $col['value']($col, $row);
-		}elseif(!empty($col['element'])){
-			if(empty($col['element_data'])){
-				$col['element_data'] = array();
-			}
-			$col['element_data']['row'] = $row;
-			$col['element_data']['col'] = $col;
-			$value = $this->_View->element($col['element'], $col['element_data']);
-		}elseif(isset($col['value'])){
-			$value = & $col['value'];
-		}elseif(isset($col['name'])){
-			$value = Set::get($row, $col['name']);
-		}else{
-			$value = null;
-		}
+        // Resolve value if is closure
+        if (isset($col['value']) && $col['value'] instanceof Closure) {
+            $value = $col['value']($col, $row);
+        } elseif (!empty($col['element'])) {
+            if (empty($col['element_data'])) {
+                $col['element_data'] = array();
+            }
+            $col['element_data']['row'] = $row;
+            $col['element_data']['col'] = $col;
+            $value = $this->_View->element($col['element'], $col['element_data']);
+        } elseif (isset($col['value'])) {
+            $value = &$col['value'];
+        } elseif (isset($col['name'])) {
+            $value = Set::get($row, $col['name']);
+        } else {
+            $value = null;
+        }
 
-		if(empty($value) && !empty($col['default'])){
-			$value = & $col['default'];
-		}
+        if (empty($value) && !empty($col['default'])) {
+            $value = &$col['default'];
+        }
 
-		if($value === null && isset($col['onNull'])){
-			$value = & $col['onNull'];
-		}
+        if ($value === null && isset($col['onNull'])) {
+            $value = &$col['onNull'];
+        }
 
-		if(isset($col['map']) && isset($col['map'][$value])){
-			$value = $col['map'][$value];
-		}
+        if (isset($col['map']) && isset($col['map'][$value])) {
+            $value = $col['map'][$value];
+        }
 
-		return $value;
-	}
+        return $value;
+    }
 
-	/**
-	 * @param array $col
-	 * @param array $data
-	 */
-	function renderRow($col, $value) {
-		echo $this->Html->tag('td', $value, isset($col['td']) ? $col['td'] : null);
-	}
+    /**
+     * @param array $col
+     * @param array $data
+     */
+    public function renderRow($col, $value)
+    {
+        echo $this->Html->tag('td', $value, isset($col['td']) ? $col['td'] : null);
+    }
 
-	function render($columns, $rows, $tableOptions = array()) {
-		echo $this->Html->tag('table', null, $tableOptions);
-		echo "<thead>";
-		echo "<tr>";
-		foreach($columns as $col){
-			echo $this->Html->tag('th', $col['text'], @$col['th']);
-		}
-		echo "</tr>";
-		echo "</thead>";
-		echo "<tbody>";
-		foreach($rows as $row){
-			echo "<tr>";
-			foreach($columns as $col){
-				$value = $this->prepareRow($col, $row);
-				$this->renderRow($col, $value);
-			}
-			echo "</tr>";
-		}
-		echo "</tbody>";
-		echo "</table>";
-	}
+    public function render($columns, $rows, $tableOptions = array())
+    {
+        echo $this->Html->tag('table', null, $tableOptions);
+        echo "<thead>";
+        echo "<tr>";
+        foreach ($columns as $col) {
+            echo $this->Html->tag('th', $col['text'], @$col['th']);
+        }
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        foreach ($rows as $row) {
+            echo "<tr>";
+            foreach ($columns as $col) {
+                $value = $this->prepareRow($col, $row);
+                $this->renderRow($col, $value);
+            }
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+    }
 
 }
-

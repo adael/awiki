@@ -1,8 +1,33 @@
 # Install instructions
 
-* Install cakephp 2.1.x
-* Install wiki plugin
-* Import Config/Schema/db-schema.sql
-* Create/edit app/config/database.php
+* Install CakePHP 2.x
+* Install wiki plugin. The folder name must be "Wiki"
+* Add the plugin in app/Config/bootstrap.php
+
+	CakePlugin::load('Wiki')
+
+* Import sql file **plugins/Wiki/Config/Schema/db-schema.sql** into your database
+* Create/edit app/Config/database.php
+* Access with http://path/to/application/wiki
 * DONE!
 
+# Features
+
+* Simple and fast
+* Not perfect
+* Markdown for content
+* Fulltext search
+* Topmenu is configurable with sublevels
+* Lock pages
+* Print mode
+* Preview
+* Made with CakePHP 2
+
+# Some tips
+
+* You can manage the wiki topmenu using the dropdown button at the right of the search box (which is at top-right corner)
+* Also you can view all created pages inside this menu
+* Use simple brackets to create links (Example: [page one])
+* For external links use [Page title](http://externalsite.org)
+* You can create also internal links with alternative title like this: [My internal page](my_page_alias)
+* In edit mode you can preview your changes (use the green tick in toolbar, at most right)
